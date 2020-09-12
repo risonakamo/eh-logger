@@ -67,5 +67,10 @@ module.exports={
         modules:false,
         chunks:false,
         assets:false
+    },
+
+    externals:{
+        "react":"",
+        "react-dom":""
     }
 };
