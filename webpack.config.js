@@ -6,7 +6,7 @@ const WebpackBar=require("webpackbar");
 module.exports={
     mode:"development",
     entry:{
-
+        "popup":"./popup/popup-index.tsx"
     },
     output:{
         path:`${__dirname}/build`,
@@ -60,7 +60,7 @@ module.exports={
         extensions:[".tsx",".ts",".jsx",".js"]
     },
 
-    devtool:"eval-source-map",
+    devtool:"cheap-module-source-map",
 
     stats:{
         entrypoints:false,
@@ -70,7 +70,7 @@ module.exports={
     },
 
     externals:{
-        "react":"",
-        "react-dom":""
+        "react":"React",
+        "react-dom":"ReactDOM"
     }
 };

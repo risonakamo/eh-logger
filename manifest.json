@@ -4,5 +4,9 @@
     "short_name":"ehlogger",
     "description":"EH dedicated logging system",
     "version":"0.0.0",
-    "homepage_url":"https://github.com/risonakamo/eh-logger"
+    "homepage_url":"https://github.com/risonakamo/eh-logger",
+
+    "browser_action":{
+        "default_popup":"popup/popup-index.html"
+    }
 }
