@@ -13,7 +13,7 @@ class PopupMain extends React.Component
       <div className="input-zones">
         <InputZone fieldName="name" content="[Jitaku Vac ation (Ulrich)] SUKEBE Order VOL.1 (Fate/Grand Order) [Digital]"/>
         <InputZone fieldName="group" content="ulrich"/>
-        <InputZone fieldName="type" content="NH"/>
+        <InputZone fieldName="type" content="NH" notEditable={true}/>
       </div>
 
       <div className="confirm-zone">
