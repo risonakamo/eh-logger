@@ -2,13 +2,15 @@
 @main-white: #eaeaea;
 
 @test-green: #09bba1;
+@test-dark-back-green: #0b0e0f;
+@test-dark-back-green-light: #202729;
 
 body
 {
     width: 240px;
     background-color: @dark-black-green;
     color: @main-white;
-    margin: 10px;
+    margin: 0;
 }
 
 p
@@ -16,18 +18,28 @@ p
     margin: 0;
 }
 
-.input-zone
+.input-zones
 {
-    margin-bottom: 4px;
+    margin: 10px;
+}
 
-    p
+.confirm-zone
+{
+    height: 40px;
+    text-align: center;
+    padding-top: 9px;
+    box-sizing: border-box;
+    background: @test-dark-back-green;
+    cursor: pointer;
+
+    img
     {
-        font-style: italic;
+        user-select: none;
+        -webkit-user-drag: none;
     }
 
-    .input-box
+    &:hover
     {
-        color: @test-green;
-        font-size: 14px;
+        background: @test-dark-back-green-light;
     }
 }
