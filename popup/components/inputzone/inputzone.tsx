@@ -13,6 +13,7 @@ export default function InputZone(props:InputZoneProps):JSX.Element
 {
   return <div className="input-zone">
     <p>{props.fieldName}</p>
-    <div className="input-box" contentEditable={!props.notEditable}>{props.content}</div>
+    <div className="input-box" contentEditable={!props.notEditable}
+      suppressContentEditableWarning={true}>{props.content}</div>
   </div>;
 }
