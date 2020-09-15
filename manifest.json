@@ -6,6 +6,19 @@
     "version":"0.0.0",
     "homepage_url":"https://github.com/risonakamo/eh-logger",
 
+    "permissions":[
+        "tabs",
+        "storage",
+        "downloads",
+        "https://nhentai.net/g/*",
+        "https://imgur.com/a/*",
+        "https://hitomi.la/doujinshi/*",
+        "https://www.dlsite.com/maniax/work/*",
+        "https://chan.sankakucomplex.com/?tags=*",
+        "https://beta.sankakucomplex.com/?tags=*",
+        "https://www.pixiv.net/users/*"
+    ],
+
     "browser_action":{
         "default_popup":"popup/popup-index.html"
     }

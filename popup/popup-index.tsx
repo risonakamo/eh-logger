@@ -2,18 +2,45 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import InputZone from "./components/inputzone/inputzone";
+import runPageParser from "../pageparsers/parserrunner";
 
 import "./popup-index.less";
 
+interface PopupMainState
+{
+  parseResult:PageParseResultWithType
+}
+
 class PopupMain extends React.Component
 {
+  state:PopupMainState
+
+  constructor(props:any)
+  {
+    super(props);
+
+    this.state={
+      parseResult:{
+        name:"",
+        group:"",
+        type:"OTHER",
+        url:""
+      }
+    };
+  }
+
+  async componentDidMount()
+  {
+    this.setState({parseResult:await runPageParser()});
+  }
+
   render()
   {
     return <>
       <div className="input-zones">
-        <InputZone fieldName="name" content="[Jitaku Vac ation (Ulrich)] SUKEBE Order VOL.1 (Fate/Grand Order) [Digital]"/>
-        <InputZone fieldName="group" content="ulrich"/>
-        <InputZone fieldName="type" content="NH" notEditable={true}/>
+        <InputZone fieldName="name" content={this.state.parseResult.name}/>
+        <InputZone fieldName="group" content={this.state.parseResult.group}/>
+        <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true}/>
       </div>
 
       <div className="confirm-zone">
