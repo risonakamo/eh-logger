@@ -16,9 +16,14 @@ class PopupMain extends React.Component
 {
   state:PopupMainState
 
+  nameField:React.RefObject<InputZone>
+  groupField:React.RefObject<InputZone>
+  typeField:React.RefObject<InputZone>
+
   constructor(props:any)
   {
     super(props);
+    this.submitEntry=this.submitEntry.bind(this);
 
     this.state={
       parseResult:{
@@ -28,6 +33,10 @@ class PopupMain extends React.Component
         url:""
       }
     };
+
+    this.nameField=React.createRef();
+    this.groupField=React.createRef();
+    this.typeField=React.createRef();
   }
 
   async componentDidMount()
@@ -38,16 +47,22 @@ class PopupMain extends React.Component
   // submit the current information to the database and close popup
   submitEntry():void
   {
-    window.close();
+    console.log({
+      name:this.nameField.current!.getValue(),
+      group:this.groupField.current!.getValue(),
+      type:this.typeField.current!.getValue()
+    });
+
+    // window.close();
   }
 
   render()
   {
     return <>
       <div className="input-zones">
-        <InputZone fieldName="name" content={this.state.parseResult.name}/>
-        <InputZone fieldName="group" content={this.state.parseResult.group}/>
-        <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true}/>
+        <InputZone fieldName="name" content={this.state.parseResult.name} ref={this.nameField}/>
+        <InputZone fieldName="group" content={this.state.parseResult.group} ref={this.groupField}/>
+        <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true} ref={this.typeField}/>
       </div>
 
       <div className="confirm-zone" onClick={this.submitEntry}>

@@ -9,11 +9,31 @@ interface InputZoneProps
   notEditable?:boolean //set true to be static field
 }
 
-export default function InputZone(props:InputZoneProps):JSX.Element
+export default class InputZone extends React.Component
 {
-  return <div className="input-zone">
-    <p>{props.fieldName}</p>
-    <div className="input-box" contentEditable={!props.notEditable}
-      suppressContentEditableWarning={true}>{props.content}</div>
-  </div>;
+  props:InputZoneProps
+
+  contentBox:React.RefObject<HTMLDivElement>
+
+  constructor(props:InputZoneProps)
+  {
+    super(props);
+
+    this.contentBox=React.createRef();
+  }
+
+  // get value of this inputzone
+  public getValue():string
+  {
+    return this.contentBox!.current!.innerText;
+  }
+
+  render()
+  {
+    return <div className="input-zone">
+      <p>{this.props.fieldName}</p>
+      <div className="input-box" contentEditable={!this.props.notEditable} ref={this.contentBox}
+        suppressContentEditableWarning={true}>{this.props.content}</div>
+    </div>;
+  }
 }
