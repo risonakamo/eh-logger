@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import InputZone from "./components/inputzone/inputzone";
 import runPageParser from "../pageparsers/parserrunner";
+import {insertLogEntry,attachWindowFunctions} from "../database/logger-database";
 
 import "./popup-index.less";
 
@@ -34,6 +35,12 @@ class PopupMain extends React.Component
     this.setState({parseResult:await runPageParser()});
   }
 
+  // submit the current information to the database and close popup
+  submitEntry():void
+  {
+    window.close();
+  }
+
   render()
   {
     return <>
@@ -43,7 +50,7 @@ class PopupMain extends React.Component
         <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true}/>
       </div>
 
-      <div className="confirm-zone">
+      <div className="confirm-zone" onClick={this.submitEntry}>
         <img src="/imgs/log-icon.png"/>
       </div>
     </>;
@@ -53,6 +60,7 @@ class PopupMain extends React.Component
 function main()
 {
   ReactDOM.render(<PopupMain/>,document.querySelector(".main"));
+  attachWindowFunctions();
 }
 
 window.onload=main;
