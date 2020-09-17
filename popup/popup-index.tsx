@@ -62,9 +62,12 @@ class PopupMain extends React.Component
   {
     return <>
       <div className="input-zones">
-        <InputZone fieldName="name" content={this.state.parseResult.name} ref={this.nameField}/>
-        <InputZone fieldName="group" content={this.state.parseResult.group} ref={this.groupField}/>
-        <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true} ref={this.typeField}/>
+        <InputZone fieldName="name" content={this.state.parseResult.name}
+          ref={this.nameField} inputBoxClass={this.state.parseResult.type}/>
+        <InputZone fieldName="group" content={this.state.parseResult.group}
+          ref={this.groupField} inputBoxClass={this.state.parseResult.type}/>
+        <InputZone fieldName="type" content={this.state.parseResult.type} notEditable={true}
+          ref={this.typeField} inputBoxClass={this.state.parseResult.type}/>
       </div>
 
       <div className="confirm-zone" onClick={this.submitEntry}>

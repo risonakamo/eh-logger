@@ -7,6 +7,7 @@ interface InputZoneProps
   fieldName:string //title above the field
   content:string //initial content of the input box
   notEditable?:boolean //set true to be static field
+  inputBoxClass?:string //class to apply to input field
 }
 
 export default class InputZone extends React.Component
@@ -30,10 +31,12 @@ export default class InputZone extends React.Component
 
   render()
   {
+    var inputBoxClass:string=this.props.inputBoxClass||"";
+
     return <div className="input-zone">
       <p>{this.props.fieldName}</p>
-      <div className="input-box" contentEditable={!this.props.notEditable} ref={this.contentBox}
-        suppressContentEditableWarning={true}>{this.props.content}</div>
+      <div className={`input-box ${inputBoxClass}`} contentEditable={!this.props.notEditable}
+        ref={this.contentBox} suppressContentEditableWarning={true}>{this.props.content}</div>
     </div>;
   }
 }

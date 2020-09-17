@@ -1,4 +1,5 @@
 @import (reference) "../../popup-index.less";
+@import (reference) "../../../sharedcss/types-colours.less";
 
 .input-zone
 {
@@ -13,5 +14,15 @@
     {
         color: @test-green;
         font-size: 14px;
+
+        // create modifier classes for each type colour.
+        // give input box one of these classes to change
+        // the colour.
+        each(@type-colours,{
+            &.@{key}
+            {
+                color: @value;
+            }
+        });
     }
 }
