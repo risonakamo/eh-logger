@@ -1,13 +1,17 @@
 // add entry to the database
-export function insertLogEntry(entry:LogEntry):void
+export async function insertLogEntry(entry:LogEntry):Promise<void>
 {
-    chrome.storage.local.get("logEntries",(storage:EhLoggerLocalStorage)=>{
-        var entries:LogEntry[]=storage.logEntries||[];
+    return new Promise((resolve)=>{
+        chrome.storage.local.get("logEntries",(storage:EhLoggerLocalStorage)=>{
+            var entries:LogEntry[]=storage.logEntries||[];
 
-        entries.push(entry);
+            entries.push(entry);
 
-        chrome.storage.local.set({
-            logEntries:entries
+            chrome.storage.local.set({
+                logEntries:entries
+            },()=>{
+                resolve();
+            });
         });
     });
 }
@@ -16,6 +20,7 @@ export function insertLogEntry(entry:LogEntry):void
 export function attachWindowFunctions():void
 {
     (window as any).checkStorage=checkStorage;
+    (window as any).clearStorage=clearStorage;
 }
 
 // print out the storage
@@ -24,4 +29,10 @@ function checkStorage():void
     chrome.storage.local.get(null,(storage:EhLoggerLocalStorage)=>{
         console.log(storage);
     });
+}
+
+// clear the storage
+function clearStorage():void
+{
+    chrome.storage.local.clear();
 }

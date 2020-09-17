@@ -45,15 +45,17 @@ class PopupMain extends React.Component
   }
 
   // submit the current information to the database and close popup
-  submitEntry():void
+  async submitEntry():Promise<void>
   {
-    console.log({
+    await insertLogEntry({
       name:this.nameField.current!.getValue(),
       group:this.groupField.current!.getValue(),
-      type:this.typeField.current!.getValue()
+      type:this.state.parseResult.type,
+      link:this.state.parseResult.url,
+      date:new Date().toLocaleString("ja-JP")
     });
 
-    // window.close();
+    window.close();
   }
 
   render()
