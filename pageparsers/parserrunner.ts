@@ -119,7 +119,7 @@ function getUrlType(url:string):EntryType
         return "IMGUR";
     }
 
-    else if (url.search(/hitomi.la\/doujinshi/)>=0)
+    else if (url.search(/hitomi.la\/(doujinshi|cg)/)>=0)
     {
         return "HITOMI";
     }
