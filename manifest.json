@@ -16,7 +16,8 @@
         "https://www.dlsite.com/maniax/work/*",
         "https://chan.sankakucomplex.com/?tags=*",
         "https://beta.sankakucomplex.com/?tags=*",
-        "https://www.pixiv.net/users/*"
+        "https://www.pixiv.net/users/*",
+        "https://exhentai.org/g/*"
     ],
 
     "browser_action":{

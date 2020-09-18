@@ -77,6 +77,10 @@ function getTargetParser(url:string):TargetParser
         parser="dlparser";
         break;
 
+        case "EXHENTAI":
+        parser="exhparser";
+        break;
+
         default:
         parser="";
     }
@@ -123,6 +127,11 @@ function getUrlType(url:string):EntryType
     else if (url.search(/dlsite.com\/maniax\/work/)>=0)
     {
         return "DLSITE";
+    }
+
+    else if (url.search(/exhentai\.org\/g/)>=0)
+    {
+        return "EXHENTAI";
     }
 
     return "OTHER";
