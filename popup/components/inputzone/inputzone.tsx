@@ -29,6 +29,7 @@ export default class InputZone extends React.Component
   {
     super(props);
     this.inputHandler=this.inputHandler.bind(this);
+    this.pasteHandler=this.pasteHandler.bind(this);
 
     this.state={
       inputValue:""
@@ -67,6 +68,14 @@ export default class InputZone extends React.Component
     return this.state.inputValue.length==0;
   }
 
+  // handle paste event
+  pasteHandler(e:React.ClipboardEvent):void
+  {
+    e.preventDefault();
+    (e.target as HTMLElement).innerText=e.clipboardData!.getData("text/plain");
+    this.inputHandler();
+  }
+
   render()
   {
     var inputBoxClass:string=this.props.inputBoxClass||"";
@@ -77,7 +86,8 @@ export default class InputZone extends React.Component
       <div className="input-areas">
         <div className={`input-placeholder ${showPlaceholderClass}`}>&lt;empty&gt;</div>
         <div className={`input-box ${inputBoxClass}`} contentEditable={!this.props.notEditable}
-          ref={this.contentBox} suppressContentEditableWarning={true} onInput={this.inputHandler}>
+          ref={this.contentBox} suppressContentEditableWarning={true} onInput={this.inputHandler}
+          onPaste={this.pasteHandler}>
             {this.props.content}
         </div>
       </div>
