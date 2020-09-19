@@ -48,8 +48,8 @@ class PopupMain extends React.Component
   async submitEntry():Promise<void>
   {
     await insertLogEntry({
-      name:this.nameField.current!.getValue(),
-      group:this.groupField.current!.getValue(),
+      name:this.nameField.current!.getValue().trim(),
+      group:this.groupField.current!.getValue().trim(),
       type:this.state.parseResult.type,
       link:this.state.parseResult.url,
       date:new Date().toLocaleString("ja-JP")
