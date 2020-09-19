@@ -10,19 +10,39 @@
         font-style: italic;
     }
 
-    .input-box
+    .input-areas
     {
-        color: @test-green;
-        font-size: 14px;
+        position: relative;
 
-        // create modifier classes for each type colour.
-        // give input box one of these classes to change
-        // the colour.
-        each(@type-colours,{
-            &.@{key}
+        .input-box
+        {
+            color: @test-green;
+            font-size: 14px;
+
+            // create modifier classes for each type colour.
+            // give input box one of these classes to change
+            // the colour.
+            each(@type-colours,{
+                &.@{key}
+                {
+                    color: @value;
+                }
+            });
+        }
+
+        .input-placeholder
+        {
+            position: absolute;
+            font-size: 14px;
+            font-style: italic;
+            top: 0;
+            z-index: -1;
+            opacity: .5;
+
+            &.hidden
             {
-                color: @value;
+                display: none;
             }
-        });
+        }
     }
 }
