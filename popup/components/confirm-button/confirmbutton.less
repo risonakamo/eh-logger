@@ -2,6 +2,7 @@
 
 .confirm-zone
 {
+    position: relative;
     height: 40px;
     text-align: center;
     padding-top: 9px;
@@ -13,12 +14,42 @@
 
     img
     {
+        position: relative;
         user-select: none;
         -webkit-user-drag: none;
+    }
+
+    .fill-rect
+    {
+        position: absolute;
+        height: 100%;
+        width: 0%;
+        top: 0;
+        background-color: @test-green;
+
+
+        &.filling
+        {
+            animation: 1.5s load-bar-width-expand ease .5s;
+            animation-fill-mode: forwards;
+        }
     }
 
     &:hover
     {
         background: @test-dark-back-green-light;
+    }
+}
+
+@keyframes load-bar-width-expand
+{
+    from
+    {
+        width: 0%;
+    }
+
+    to
+    {
+        width: 100%;
     }
 }
