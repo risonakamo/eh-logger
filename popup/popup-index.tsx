@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import InputZone from "./components/inputzone/inputzone";
+import ConfirmButton from "./components/confirm-button/confirmbutton";
 import runPageParser from "../pageparsers/parserrunner";
 import {insertLogEntry,attachWindowFunctions} from "../database/logger-database";
 
@@ -70,9 +71,7 @@ class PopupMain extends React.Component
           ref={this.typeField} inputBoxClass={this.state.parseResult.type}/>
       </div>
 
-      <div className="confirm-zone" onClick={this.submitEntry}>
-        <img src="/imgs/log-icon.png"/>
-      </div>
+      <ConfirmButton onClick={this.submitEntry}/>
     </>;
   }
 }
