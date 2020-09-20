@@ -1,17 +1,25 @@
 // add entry to the database
 export async function insertLogEntry(entry:LogEntry):Promise<void>
 {
+    return new Promise(async (resolve)=>{
+        var entries:LogEntry[]=await getLogEntries();
+
+        entries.push(entry);
+
+        chrome.storage.local.set({
+            logEntries:entries
+        },()=>{
+            resolve();
+        });
+    });
+}
+
+// return all log entries
+export async function getLogEntries():Promise<LogEntry[]>
+{
     return new Promise((resolve)=>{
         chrome.storage.local.get("logEntries",(storage:EhLoggerLocalStorage)=>{
-            var entries:LogEntry[]=storage.logEntries||[];
-
-            entries.push(entry);
-
-            chrome.storage.local.set({
-                logEntries:entries
-            },()=>{
-                resolve();
-            });
+            resolve(storage.logEntries||[]);
         });
     });
 }
