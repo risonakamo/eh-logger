@@ -7,13 +7,25 @@ body
     margin: 0;
 }
 
+a
+{
+    text-decoration: none;
+    color: @main-white;
+    font-size: 14px;
+    opacity: .8;
+
+    &:hover
+    {
+        opacity: 1;
+    }
+}
+
 .container
 {
     display: flex;
     width: 1000px;
     height: 500px;
     margin: auto;
-    background: lightgreen;
 
     .log-table
     {
@@ -23,6 +35,5 @@ body
     .control-column
     {
         width: 260px;
-        background: lightblue;
     }
 }
