@@ -7,7 +7,10 @@ import "./exportbutton.less";
 
 export default function ExportButton()
 {
-  return <a href="" onClick={doExport} className="export-button">Export Logs</a>;
+  return <a href="" onClick={doExport} className="export-button">
+    <div className="button-text">Export Logs</div>
+    <img src="/imgs/export-icon.png"/>
+  </a>;
 }
 
 // initiate logs download.

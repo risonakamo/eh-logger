@@ -2,13 +2,25 @@
 
 .export-button
 {
-    display: block;
+    display: flex;
     width: 100%;
     padding: 12px;
     transition: .1s background-color;
+    border-bottom: 1px solid fade(@main-white,80%);
+    box-sizing: border-box;
 
     &:hover
     {
         background-color: fade(@main-white,10%);
+    }
+
+    &:active
+    {
+        background-color: fade(@main-white,20%);
+    }
+
+    .button-text
+    {
+        flex: 1;
     }
 }
