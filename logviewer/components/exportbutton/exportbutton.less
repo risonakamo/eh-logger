@@ -1,6 +1,14 @@
+@import (reference) "../../../sharedcss/shared-colours.less";
+
 .export-button
 {
     display: block;
     width: 100%;
     padding: 12px;
+    transition: .1s background-color;
+
+    &:hover
+    {
+        background-color: fade(@main-white,10%);
+    }
 }
