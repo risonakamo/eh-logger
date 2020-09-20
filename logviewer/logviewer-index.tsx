@@ -7,7 +7,19 @@ import "./logviewer-index.less";
 
 class LogviewerMain extends React.Component
 {
+  render()
+  {
+    return <>
+      <div className="container">
+        <div className="log-table">
 
+        </div>
+        <div className="control-column">
+
+        </div>
+      </div>
+    </>;
+  }
 }
 
 function main()
