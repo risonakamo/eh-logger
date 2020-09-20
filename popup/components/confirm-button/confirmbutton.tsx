@@ -5,6 +5,7 @@ import "./confirmbutton.less";
 interface ConfirmButtonProps
 {
   onClick():void //click event handler
+  onHoldComplete():void //called when button hold action completes
 }
 
 interface ConfirmButtonState
@@ -33,7 +34,7 @@ export default class ConfirmButton extends React.Component
   beginHoldTimer():void
   {
     this.holdTimer=setTimeout(()=>{
-      window.close();
+      this.props.onHoldComplete();
     },2000);
 
     this.setState({holding:true});

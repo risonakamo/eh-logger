@@ -59,6 +59,12 @@ class PopupMain extends React.Component
     window.close();
   }
 
+  // open the viewer page
+  openViewerPage():void
+  {
+    window.close();
+  }
+
   render()
   {
     return <>
@@ -71,7 +77,7 @@ class PopupMain extends React.Component
           ref={this.typeField} inputBoxClass={this.state.parseResult.type}/>
       </div>
 
-      <ConfirmButton onClick={this.submitEntry}/>
+      <ConfirmButton onClick={this.submitEntry} onHoldComplete={this.openViewerPage}/>
     </>;
   }
 }

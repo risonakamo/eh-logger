@@ -6,7 +6,8 @@ const WebpackBar=require("webpackbar");
 module.exports={
     mode:"development",
     entry:{
-        "popup":"./popup/popup-index.tsx"
+        "popup":"./popup/popup-index.tsx",
+        "logviewer":"./logviewer/logviewer-index.tsx"
     },
     output:{
         path:`${__dirname}/build`,
@@ -66,7 +67,7 @@ module.exports={
         entrypoints:false,
         modules:false,
         chunks:false,
-        assets:false
+        // assets:false
     },
 
     externals:{
