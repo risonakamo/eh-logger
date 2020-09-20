@@ -62,6 +62,10 @@ class PopupMain extends React.Component
   // open the viewer page
   openViewerPage():void
   {
+    chrome.tabs.create({
+      url:"/logviewer/logviewer-index.html",
+      active:true
+    });
     window.close();
   }
 
