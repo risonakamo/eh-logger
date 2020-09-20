@@ -1,4 +1,5 @@
 import React from "react";
+import luxon from "luxon";
 
 import {getLogEntries} from "../../../database/logger-database";
 
@@ -14,9 +15,11 @@ async function doExport(e:React.MouseEvent):Promise<void>
 {
   e.preventDefault();
 
+  var timestamp:string=luxon.DateTime.local().toFormat("yyMMdd_HHmm");
+
   chrome.downloads.download({
     url:"data:application/json;base64,"+btoa(unescape(encodeURIComponent(await logEntriesFormatted()))),
-    filename:"logs.json"
+    filename:`${timestamp}-eh-logs.json`
   });
 }
 
