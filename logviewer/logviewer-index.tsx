@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import {attachWindowFunctions} from "../database/logger-database";
 import ExportButton from "./components/exportbutton/exportbutton";
+import LogsTable from "./components/logs-table/logstable";
 
 import "./logviewer-index.less";
 
@@ -13,7 +14,7 @@ class LogviewerMain extends React.Component
     return <>
       <div className="container">
         <div className="log-table">
-
+          <LogsTable/>
         </div>
         <div className="control-column">
           <div className="item-container">

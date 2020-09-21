@@ -5,7 +5,7 @@ import {getLogEntries} from "../../../database/logger-database";
 
 import "./exportbutton.less";
 
-export default function ExportButton()
+export default function ExportButton():JSX.Element
 {
   return <a href="" onClick={doExport} className="export-button">
     <div className="button-text">Export Logs</div>
