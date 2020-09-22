@@ -1,18 +1,37 @@
 @import (reference) "../../../sharedcss/types-colours.less";
+@import (reference) "../../../sharedcss/shared-colours.less";
 
 .logs-table
 {
     width: 100%;
     table-layout: fixed;
+    border-collapse: collapse;
+
+    thead
+    {
+        border-bottom: 1px solid @main-white;
+
+        tr
+        {
+            cursor: default;
+
+            td
+            {
+                padding-bottom: 7px;
+                padding-top: 7px;
+            }
+        }
+    }
 
     tr
     {
         .generate-colour-classes();
-        // color: var(--type-colour);
+        transition: .15s background-color;
+        cursor: pointer;
 
         td
         {
-            padding: 2px 7px 2px 8px;
+            padding: 3px 8px 3px 8px;
             box-sizing: border-box;
             white-space: nowrap;
             overflow: hidden;
@@ -26,12 +45,18 @@
             {
                 width: 30px;
                 color: var(--type-colour);
+                padding-left: 0;
             }
 
             &.group
             {
                 width: 130px;
             }
+        }
+
+        &:hover
+        {
+            background-color: var(--type-colour-faded);
         }
     }
 }

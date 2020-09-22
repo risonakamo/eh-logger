@@ -13,7 +13,7 @@ class LogviewerMain extends React.Component
   {
     return <>
       <div className="container">
-        <div className="log-table">
+        <div className="log-table-contain">
           <LogsTable/>
         </div>
         <div className="control-column">
