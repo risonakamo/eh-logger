@@ -1,23 +1,37 @@
+@import (reference) "../../../sharedcss/types-colours.less";
+
 .logs-table
 {
     width: 100%;
     table-layout: fixed;
 
-    td
+    tr
     {
-        &.date
-        {
-            width: 75px;
-        }
+        .generate-colour-classes();
+        // color: var(--type-colour);
 
-        &.type
+        td
         {
-            width: 25px;
-        }
+            padding: 2px 7px 2px 8px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
 
-        &.group
-        {
-            width: 85px;
+            &.date
+            {
+                width: 90px;
+            }
+
+            &.type
+            {
+                width: 30px;
+                color: var(--type-colour);
+            }
+
+            &.group
+            {
+                width: 130px;
+            }
         }
     }
 }

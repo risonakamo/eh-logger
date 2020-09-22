@@ -19,3 +19,14 @@
     PIXIV: @pixiv-blue;
     EXHENTAI: @exh-red2;
 }
+
+// generate modifier classes applicable to an item.
+.generate-colour-classes()
+{
+    each(@type-colours,{
+        &.@{key}
+        {
+            --type-colour: @value;
+        }
+    });
+}
