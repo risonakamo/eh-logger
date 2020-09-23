@@ -1,8 +1,15 @@
 import React from "react";
 
+import LogsRow from "./logsrow";
+
 import "./logstable.less";
 
-export default function LogsTable():JSX.Element
+interface LogsTableProps
+{
+  logs:LogEntry[]
+}
+
+export default function LogsTable(props:LogsTableProps):JSX.Element
 {
   return <table className="logs-table">
     <thead>
@@ -14,18 +21,9 @@ export default function LogsTable():JSX.Element
       </tr>
     </thead>
     <tbody>
-      <tr className="NHENTAI">
-        <td className="date">09/21 00:36</td>
-        <td className="type">NH</td>
-        <td className="group">number2</td>
-        <td className="name">(C96) [Kabushikigaisha Toranoana (Various)] TORANOANA Girls Collection 2019 SUMMER TYPE-X</td>
-      </tr>
-      <tr className="NHENTAI">
-        <td className="date">09/21 00:36</td>
-        <td className="type">NH</td>
-        <td className="group">number2</td>
-        <td className="name">(C96) [Kabushikigaisha Toranoana (Various)] TORANOANA Girls Collection 2019 SUMMER TYPE-X</td>
-      </tr>
+      {props.logs.map((x:LogEntry,i:number)=>{
+        return <LogsRow entry={x} key={i}/>;
+      })}
     </tbody>
   </table>;
 }

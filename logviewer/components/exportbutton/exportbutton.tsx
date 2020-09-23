@@ -1,7 +1,7 @@
 import React from "react";
 import luxon from "luxon";
 
-import {getLogEntries} from "../../../database/logger-database";
+import {getLogEntries,logEntrySort} from "../../../database/logger-database";
 
 import "./exportbutton.less";
 
@@ -34,23 +34,4 @@ async function logEntriesFormatted():Promise<string>
   entries.sort(logEntrySort);
 
   return JSON.stringify(entries,null,4);
-}
-
-// use to sort logentries in time descending (newest to oldest)
-function logEntrySort(a:LogEntry,b:LogEntry):number
-{
-  var adate:Date=new Date(a.date);
-  var bdate:Date=new Date(b.date);
-
-  if (adate>bdate)
-  {
-    return -1;
-  }
-
-  else if (adate<bdate)
-  {
-    return 1;
-  }
-
-  return 0;
 }

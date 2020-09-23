@@ -1,4 +1,5 @@
 import React from "react";
+import luxon from "luxon";
 
 interface LogsRowProps
 {
@@ -8,7 +9,7 @@ interface LogsRowProps
 export default function LogsRow(props:LogsRowProps):JSX.Element
 {
   return <tr className={props.entry.type}>
-    <td className="date">09/21 00:36</td>
+    <td className="date">{luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm")}</td>
     <td className="type">{getAbbrvType(props.entry.type)}</td>
     <td className="group">{props.entry.group}</td>
     <td className="name">{props.entry.name}</td>
