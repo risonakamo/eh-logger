@@ -19,10 +19,10 @@ function LogviewerMain():JSX.Element
 
   return <>
     <div className="container">
-      <div className="log-table-contain">
+      <div className="log-table-contain container-col">
         <LogsTable logs={logs}/>
       </div>
-      <div className="control-column">
+      <div className="control-column container-col">
         <div className="item-container">
           <ExportButton/>
         </div>
