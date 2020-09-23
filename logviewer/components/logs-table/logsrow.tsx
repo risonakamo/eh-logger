@@ -11,8 +11,8 @@ export default function LogsRow(props:LogsRowProps):JSX.Element
   return <tr className={props.entry.type}>
     <td className="date">{luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm")}</td>
     <td className="type">{getAbbrvType(props.entry.type)}</td>
-    <td className="group">{props.entry.group}</td>
-    <td className="name">{props.entry.name}</td>
+    <td className="group" title={props.entry.group}>{props.entry.group}</td>
+    <td className="name" title={props.entry.name}>{props.entry.name}</td>
   </tr>;
 }
 
