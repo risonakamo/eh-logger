@@ -1,0 +1,46 @@
+@import (reference) "../../../sharedcss/types-colours.less";
+@import (reference) "../../../sharedcss/shared-colours.less";
+
+.logs-table2
+{
+    .log-row
+    {
+        display: flex;
+        padding: 2px 0 4px 0;
+        font-size: 13px;
+        opacity: 1;
+        transition: .15s background-color;
+        --type-colour: @default-green;
+        --type-colour-faded: fade(@default-green,20%);
+        .generate-colour-classes();
+
+        .log-col
+        {
+            padding-left: 8px;
+            box-sizing: border-box;
+            white-space: nowrap;
+
+            &.date
+            {
+                min-width: 90px;
+            }
+
+            &.type
+            {
+                min-width: 30px;
+                padding-left: 0;
+                color: var(--type-colour);
+            }
+
+            &.group
+            {
+                min-width: 130px;
+            }
+        }
+
+        &:hover
+        {
+            background-color: var(--type-colour-faded);
+        }
+    }
+}

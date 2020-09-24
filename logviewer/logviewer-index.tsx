@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import {attachWindowFunctions,getLogEntries,logEntrySort} from "../database/logger-database";
 import ExportButton from "./components/exportbutton/exportbutton";
-import LogsTable from "./components/logs-table/logstable";
+import LogsTable2 from "./components/logs-table2/logstable2";
 
 import "./logviewer-index.less";
 
@@ -20,7 +20,7 @@ function LogviewerMain():JSX.Element
   return <>
     <div className="container">
       <div className="log-table-contain container-col" data-simplebar>
-        <LogsTable logs={logs}/>
+        <LogsTable2 logs={logs}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
