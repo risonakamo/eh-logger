@@ -21,11 +21,11 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
 const abbrvType:Record<EntryType,string>={
   NHENTAI:"NH",
   OTHER:"??",
-  SANKAKU:"SK",
+  SANKAKU:"SC",
   IMGUR:"IM",
   DLSITE:"DL",
   HITOMI:"HI",
-  PIXIV:"PI",
+  PIXIV:"PX",
   EXHENTAI:"EX",
   BETASANKAKU:"BS"
 };
