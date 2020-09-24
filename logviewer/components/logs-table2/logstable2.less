@@ -10,6 +10,7 @@
         font-size: 13px;
         opacity: 1;
         transition: .15s background-color;
+        overflow: hidden;
         --type-colour: @default-green;
         --type-colour-faded: fade(@default-green,20%);
         .generate-colour-classes();
@@ -41,6 +42,16 @@
         &:hover
         {
             background-color: var(--type-colour-faded);
+        }
+
+        &.header-row
+        {
+            border-bottom: 1px solid fade(@main-white,80%);
+
+            &:hover
+            {
+                background-color: transparent;
+            }
         }
     }
 }
