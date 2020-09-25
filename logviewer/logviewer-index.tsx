@@ -17,10 +17,15 @@ function LogviewerMain():JSX.Element
     })();
   },[]);
 
+  function deleteEntry(entry:LogEntry):void
+  {
+    console.log("deleting",entry);
+  }
+
   return <>
     <div className="container">
       <div className="log-table-contain container-col" data-simplebar>
-        <LogsTable2 logs={logs}/>
+        <LogsTable2 logs={logs} deleteEntry={deleteEntry}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">

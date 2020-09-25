@@ -1,16 +1,45 @@
-import React from "react";
+import React,{useState,useRef} from "react";
 import luxon from "luxon";
 
 interface LogsRowProps
 {
-  entry:LogEntry
+  entry:LogEntry // the entry
+  holdCompleted(entry:LogEntry):void // function to call with the row's entry when hold
+                                     // action is completed on the row
 }
 
 export default function LogRow2(props:LogsRowProps):JSX.Element
 {
-  var dateText:string=luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
+  const [holding,setHolding]=useState<boolean>(false);
+  const holdTimer=useRef<number>();
 
-  return <a className={`log-row ${props.entry.type}`} href={props.entry.link}>
+  // begin the hold timer
+  function beginHoldTimer():void
+  {
+    holdTimer.current=setTimeout(()=>{
+      props.holdCompleted(props.entry);
+      setHolding(false);
+    },1500);
+    setHolding(true);
+  }
+
+  // end the hold timer
+  function endHoldTimer():void
+  {
+    if (holding)
+    {
+      clearTimeout(holdTimer.current);
+      setHolding(false);
+    }
+  }
+
+  const dateText:string=luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
+  const holdingClass:string=holding?"filling":"";
+
+  return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}
+    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer}
+  >
+    <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
     <div className="log-col type">{getAbbrvType(props.entry.type)}</div>
     <div className="log-col group" title={props.entry.group}>{props.entry.group}</div>

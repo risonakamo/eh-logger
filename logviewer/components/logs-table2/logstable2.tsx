@@ -7,6 +7,7 @@ import "./logstable2.less";
 interface LogsTableProps
 {
   logs:LogEntry[]
+  deleteEntry(entry:LogEntry):void
 }
 
 export default function LogsTable2(props:LogsTableProps):JSX.Element
@@ -19,7 +20,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
       <div className="log-col name">NAME</div>
     </div>
     {props.logs.map((x:LogEntry,i:number)=>{
-      return <LogRow2 entry={x} key={i}/>
+      return <LogRow2 entry={x} key={i} holdCompleted={props.deleteEntry}/>
     })}
   </div>;
 }

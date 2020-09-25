@@ -6,6 +6,7 @@
     .log-row
     {
         display: flex;
+        position: relative;
         padding: 2px 0 4px 0;
         font-size: 13px;
         opacity: 1;
@@ -53,5 +54,35 @@
                 background-color: transparent;
             }
         }
+
+        .fill-bar
+        {
+            position: absolute;
+            height: 100%;
+            width: 0%;
+            top: 0;
+            background-color: var(--type-colour);
+
+            &.filling
+            {
+                // animation duration + delay must be the same as the hold timer
+                // in the element
+                animation: 1s fill-width-expand linear .5s;
+                animation-fill-mode: forwards;
+            }
+        }
+    }
+}
+
+@keyframes fill-width-expand
+{
+    from
+    {
+        width: 0%;
+    }
+
+    to
+    {
+        width: 100%;
     }
 }
