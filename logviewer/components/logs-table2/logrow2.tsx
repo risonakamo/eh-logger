@@ -10,14 +10,16 @@ interface LogsRowProps
 
 export default function LogRow2(props:LogsRowProps):JSX.Element
 {
-  const [holding,setHolding]=useState<boolean>(false);
+  const [holding,setHolding]=useState<boolean>(false); // holding in progress
   const holdTimer=useRef<number>();
+  const preventNav=useRef<boolean>(false);
 
   // begin the hold timer
   function beginHoldTimer():void
   {
     holdTimer.current=setTimeout(()=>{
       props.holdCompleted(props.entry);
+      preventNav.current=true;
       setHolding(false);
     },1500);
     setHolding(true);
@@ -29,7 +31,17 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
     if (holding)
     {
       clearTimeout(holdTimer.current);
+      preventNav.current=false;
       setHolding(false);
+    }
+  }
+
+  // prevent navigation after a hold event completed
+  function linkClick(e:React.MouseEvent):void
+  {
+    if (preventNav.current)
+    {
+      e.preventDefault();
     }
   }
 
@@ -37,7 +49,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   const holdingClass:string=holding?"filling":"";
 
   return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}
-    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer}
+    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick}
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
