@@ -5,11 +5,13 @@
 {
     .log-row
     {
+        height: 23px;
         display: flex;
         position: relative;
         padding: 2px 0 4px 0;
         font-size: 13px;
         opacity: 1;
+        box-sizing: border-box;
         transition: .15s background-color;
         overflow: hidden;
         --type-colour: @default-green;
@@ -47,7 +49,9 @@
 
         &.header-row
         {
-            border-bottom: 1px solid fade(@main-white,80%);
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: .5px;
 
             &:hover
             {
