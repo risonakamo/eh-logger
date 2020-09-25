@@ -15,11 +15,38 @@ export async function insertLogEntry(entry:LogEntry):Promise<void>
 }
 
 // return all log entries
-export async function getLogEntries():Promise<LogEntry[]>
+export async function getLogEntries(sorted:boolean=false):Promise<LogEntry[]>
 {
     return new Promise((resolve)=>{
         chrome.storage.local.get("logEntries",(storage:EhLoggerLocalStorage)=>{
-            resolve(storage.logEntries||[]);
+            if (!sorted)
+            {
+                resolve(storage.logEntries||[]);
+            }
+
+            else
+            {
+                resolve((storage.logEntries||[]).sort(logEntrySort));
+            }
+        });
+    });
+}
+
+// given a log entry, remove from the database ALL COPIES of that entry.
+// returns the new list of entries
+export async function deleteEntry(entry:LogEntry):Promise<LogEntry[]>
+{
+    return new Promise(async (resolve)=>{
+        var entries:LogEntry[]=await getLogEntries();
+
+        var newEntries:LogEntry[]=entries.filter((x:LogEntry)=>{
+            return !(x.date==entry.date && x.link==entry.link);
+        });
+
+        chrome.storage.local.set({
+            logEntries:newEntries
+        },()=>{
+            resolve(newEntries);
         });
     });
 }

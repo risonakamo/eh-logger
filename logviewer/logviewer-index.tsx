@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from "react";
 import ReactDOM from "react-dom";
 
-import {attachWindowFunctions,getLogEntries,logEntrySort} from "../database/logger-database";
+import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "../database/logger-database";
 import ExportButton from "./components/exportbutton/exportbutton";
 import LogsTable2 from "./components/logs-table2/logstable2";
 
@@ -13,19 +13,19 @@ function LogviewerMain():JSX.Element
 
   useEffect(()=>{
     (async ()=>{
-      setLogs((await getLogEntries()).sort(logEntrySort));
+      setLogs(await getLogEntries(true));
     })();
   },[]);
 
-  function deleteEntry(entry:LogEntry):void
+  async function doDeleteEntry(entry:LogEntry):Promise<void>
   {
-    console.log("deleting",entry);
+    setLogs((await deleteEntry(entry)).sort(logEntrySort));
   }
 
   return <>
     <div className="container">
       <div className="log-table-contain container-col" data-simplebar>
-        <LogsTable2 logs={logs} deleteEntry={deleteEntry}/>
+        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
