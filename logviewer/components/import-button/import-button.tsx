@@ -5,7 +5,13 @@ import {addMultipleWithMerge} from "../../../database/logger-database";
 
 import "./import-button.less";
 
-export default function ImportButton():JSX.Element
+interface ImportButtonProps
+{
+  //callback to call when new entries are imported. returns the new entries.
+  importedLogs(logs:LogEntry[]):void
+}
+
+export default function ImportButton(props:ImportButtonProps):JSX.Element
 {
   const fileInput=useRef<HTMLInputElement>(null);
 
@@ -20,7 +26,8 @@ export default function ImportButton():JSX.Element
   // file submitted handler.
   async function fileSubmitted():Promise<void>
   {
-    addMultipleWithMerge(await readJsonFromFileInput<LogEntry[]>(fileInput.current!.files![0]));
+    props.importedLogs(await addMultipleWithMerge(
+      await readJsonFromFileInput<LogEntry[]>(fileInput.current!.files![0])));
   }
 
   return <>

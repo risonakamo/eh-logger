@@ -12,15 +12,23 @@ function LogviewerMain():JSX.Element
 {
   const [logs,setLogs]=useState<LogEntry[]>([]);
 
+  // component did mount.
   useEffect(()=>{
     (async ()=>{
-      setLogs(await getLogEntries(true));
+      sortAndSetLogs(await getLogEntries());
     })();
   },[]);
 
+  // perform delete on an entry and re-render.
   async function doDeleteEntry(entry:LogEntry):Promise<void>
   {
-    setLogs((await deleteEntry(entry)).sort(logEntrySort));
+    sortAndSetLogs(await deleteEntry(entry));
+  }
+
+  // given logs, sort and set them, and re render.
+  function sortAndSetLogs(logs:LogEntry[]):void
+  {
+    setLogs(logs.sort(logEntrySort));
   }
 
   return <>
@@ -31,7 +39,7 @@ function LogviewerMain():JSX.Element
       <div className="control-column container-col">
         <div className="item-container">
           <ExportButton/>
-          <ImportButton/>
+          <ImportButton importedLogs={sortAndSetLogs}/>
         </div>
       </div>
     </div>
