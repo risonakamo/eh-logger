@@ -6,7 +6,7 @@ interface ColumnButtonProps
 {
   text:string
   icon:string
-  onClick(e:React.MouseEvent):void
+  onClick?(e:React.MouseEvent):void
 }
 
 export default function ColumnButton(props:ColumnButtonProps):JSX.Element

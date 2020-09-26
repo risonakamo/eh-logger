@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "../database/logger-database";
 import ExportButton from "./components/exportbutton/exportbutton";
+import ImportButton from "./components/import-button/import-button";
 import LogsTable2 from "./components/logs-table2/logstable2";
 
 import "./logviewer-index.less";
@@ -30,6 +31,7 @@ function LogviewerMain():JSX.Element
       <div className="control-column container-col">
         <div className="item-container">
           <ExportButton/>
+          <ImportButton/>
         </div>
       </div>
     </div>
