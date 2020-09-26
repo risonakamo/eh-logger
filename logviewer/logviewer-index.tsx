@@ -5,6 +5,7 @@ import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "../d
 import ExportButton from "./components/exportbutton/exportbutton";
 import ImportButton from "./components/import-button/import-button";
 import LogsTable2 from "./components/logs-table2/logstable2";
+import convertEhHistoryLogs from "./components/legacyconverter/legacyconverter";
 
 import "./logviewer-index.less";
 
@@ -14,6 +15,9 @@ function LogviewerMain():JSX.Element
 
   // component did mount.
   useEffect(()=>{
+    (window as any).convertEhHistoryLogs=convertEhHistoryLogs;
+
+    // initial retrival of logs.
     (async ()=>{
       sortAndSetLogs(await getLogEntries());
     })();
