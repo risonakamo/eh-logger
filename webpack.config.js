@@ -73,6 +73,7 @@ module.exports={
     externals:{
         "react":"React",
         "react-dom":"ReactDOM",
-        "luxon":"luxon"
+        "luxon":"luxon",
+        "lodash":"_"
     }
 };

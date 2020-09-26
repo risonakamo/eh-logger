@@ -1,6 +1,7 @@
 import React,{useRef} from "react";
 
 import ColumnButton from "../column-button/column-button";
+import {addMultipleWithMerge} from "../../../database/logger-database";
 
 import "./import-button.less";
 
@@ -19,7 +20,7 @@ export default function ImportButton():JSX.Element
   // file submitted handler.
   async function fileSubmitted():Promise<void>
   {
-    console.log(await readJsonFromFileInput<LogEntry[]>(fileInput.current!.files![0]));
+    addMultipleWithMerge(await readJsonFromFileInput<LogEntry[]>(fileInput.current!.files![0]));
   }
 
   return <>
@@ -32,7 +33,7 @@ export default function ImportButton():JSX.Element
 // with the json parsed readastext value
 function readJsonFromFileInput<T>(fileobject:File):Promise<T>
 {
-  return new Promise((resolve)=>{
+  return new Promise<T>((resolve)=>{
     var reader=new FileReader();
     reader.onload=()=>{
       resolve(JSON.parse(reader.result as string));

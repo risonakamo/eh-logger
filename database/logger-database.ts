@@ -1,7 +1,9 @@
+import _ from "lodash";
+
 // add entry to the database
 export async function insertLogEntry(entry:LogEntry):Promise<void>
 {
-    return new Promise(async (resolve)=>{
+    return new Promise<void>(async (resolve)=>{
         var entries:LogEntry[]=await getLogEntries();
 
         entries.push(entry);
@@ -17,7 +19,7 @@ export async function insertLogEntry(entry:LogEntry):Promise<void>
 // return all log entries
 export async function getLogEntries(sorted:boolean=false):Promise<LogEntry[]>
 {
-    return new Promise((resolve)=>{
+    return new Promise<LogEntry[]>((resolve)=>{
         chrome.storage.local.get("logEntries",(storage:EhLoggerLocalStorage)=>{
             if (!sorted)
             {
@@ -36,7 +38,7 @@ export async function getLogEntries(sorted:boolean=false):Promise<LogEntry[]>
 // returns the new list of entries
 export async function deleteEntry(entry:LogEntry):Promise<LogEntry[]>
 {
-    return new Promise(async (resolve)=>{
+    return new Promise<LogEntry[]>(async (resolve)=>{
         var entries:LogEntry[]=await getLogEntries();
 
         var newEntries:LogEntry[]=entries.filter((x:LogEntry)=>{
@@ -47,6 +49,21 @@ export async function deleteEntry(entry:LogEntry):Promise<LogEntry[]>
             logEntries:newEntries
         },()=>{
             resolve(newEntries);
+        });
+    });
+}
+
+// add all given entries to the database, without duplicating. returns the new log entries
+export async function addMultipleWithMerge(entries:LogEntry[]):Promise<LogEntry[]>
+{
+    return new Promise<LogEntry[]>(async (resolve)=>{
+        var currentEntries:LogEntry[]=await getLogEntries();
+        var mergedEntries:LogEntry[]=_.unionWith(entries,currentEntries,logEntryCompare);
+
+        chrome.storage.local.set({
+            logEntries:mergedEntries
+        },()=>{
+            resolve(mergedEntries);
         });
     });
 }
@@ -75,6 +92,12 @@ export function logEntrySort(a:LogEntry,b:LogEntry):number
   }
 
   return 0;
+}
+
+// determine if 2 logs are the same
+function logEntryCompare(a:LogEntry,b:LogEntry):boolean
+{
+    return a.date==b.date && a.link==b.link;
 }
 
 // print out the storage

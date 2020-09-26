@@ -2,7 +2,7 @@
 // in a promise
 export default function runPageParser():Promise<PageParseResultWithType>
 {
-    return new Promise((resolve)=>{
+    return new Promise<PageParseResultWithType>((resolve)=>{
         chrome.tabs.query({active:true,currentWindow:true},(tabs:chrome.tabs.Tab[])=>{
             var taburl:string;
             if (!tabs.length || !tabs[0].url)
