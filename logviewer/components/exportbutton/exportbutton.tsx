@@ -1,16 +1,12 @@
 import React from "react";
 import luxon from "luxon";
 
+import ColumnButton from "../column-button/column-button";
 import {getLogEntries,logEntrySort} from "../../../database/logger-database";
-
-import "./exportbutton.less";
 
 export default function ExportButton():JSX.Element
 {
-  return <a href="" onClick={doExport} className="export-button">
-    <div className="button-text">Export Logs</div>
-    <img src="/imgs/export-icon.png"/>
-  </a>;
+  return <ColumnButton onClick={doExport} text="Export Logs" icon="/imgs/export-icon.png"/>;
 }
 
 // initiate logs download.
