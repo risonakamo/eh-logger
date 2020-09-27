@@ -31,7 +31,7 @@ export default function ImportButton(props:ImportButtonProps):JSX.Element
   }
 
   return <>
-    <ColumnButton onClick={openFileInput} text="Import Logs" icon="/imgs/export-icon.png"/>
+    <ColumnButton onClick={openFileInput} text="Import Logs" icon="/imgs/importicon2.png"/>
     <input type="file" className="import-file-input" ref={fileInput} onChange={fileSubmitted}/>
   </>;
 }
