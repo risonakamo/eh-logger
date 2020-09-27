@@ -21,7 +21,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
       props.holdCompleted(props.entry);
       preventNav.current=true;
       setHolding(false);
-    },1500);
+    },1350);
     setHolding(true);
   }
 
@@ -49,7 +49,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   const holdingClass:string=holding?"filling":"";
 
   return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}
-    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick}
+    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick} onDragLeave={endHoldTimer}
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
