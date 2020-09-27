@@ -19,8 +19,12 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
       <div className="log-col group">GROUP</div>
       <div className="log-col name">NAME</div>
     </div>
-    {props.logs.map((x:LogEntry,i:number)=>{
-      return <LogRow2 entry={x} key={i} holdCompleted={props.deleteEntry}/>
-    })}
+    <div className="the-log-rows" data-simplebar>
+      <div>
+        {props.logs.map((x:LogEntry,i:number)=>{
+          return <LogRow2 entry={x} key={i} holdCompleted={props.deleteEntry}/>
+        })}
+      </div>
+    </div>
   </div>;
 }

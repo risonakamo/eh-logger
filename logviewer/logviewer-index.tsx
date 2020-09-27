@@ -37,7 +37,7 @@ function LogviewerMain():JSX.Element
 
   return <>
     <div className="container">
-      <div className="log-table-contain container-col" data-simplebar>
+      <div className="log-table-contain container-col">
         <LogsTable2 logs={logs} deleteEntry={doDeleteEntry}/>
       </div>
       <div className="control-column container-col">
