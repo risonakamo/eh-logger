@@ -28,10 +28,25 @@ export default function runPageParser():Promise<PageParseResultWithType>
                 return;
             }
 
-            chrome.tabs.executeScript({file:targetPageParser},(res:PageParseResult[])=>{
+            chrome.tabs.executeScript({file:targetPageParser},(res:(PageParseResult|null)[]|undefined)=>{
+                var actualres:PageParseResult;
+
+                if (res && res[0])
+                {
+                    actualres=res[0];
+                }
+
+                else
+                {
+                    actualres={
+                        name:"",
+                        group:""
+                    };
+                }
+
                 resolve({
-                    name:res[0].name,
-                    group:res[0].group,
+                    name:actualres.name,
+                    group:actualres.group,
                     type:tabtype,
                     url:taburl
                 });

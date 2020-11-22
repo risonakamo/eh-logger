@@ -1,8 +1,9 @@
 {
   "name": "eh-logger",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "build": "webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
