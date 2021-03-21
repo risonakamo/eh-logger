@@ -1,6 +1,12 @@
 @import (reference) "../../../sharedcss/types-colours.less";
 @import (reference) "../../../sharedcss/shared-colours.less";
 
+// the total of these values must equal the delete timing of the logrow, or shorter
+// (animation will cut off if shorter)
+@delete-timing: 1500ms; //total hold time for delete
+@hold-animation-delay: .8s; //time before animations starts playing as user is holding
+@fill-animation-length: @delete-timing - @hold-animation-delay; //time animation lasts when it begins
+
 .logs-table2
 {
     display: flex;
@@ -87,7 +93,7 @@
             {
                 // animation duration + delay must be the same as the hold timer
                 // in the element
-                animation: .8s fill-width-expand linear .5s;
+                animation: @fill-animation-length fill-width-expand linear @hold-animation-delay;
                 animation-fill-mode: forwards;
             }
         }
