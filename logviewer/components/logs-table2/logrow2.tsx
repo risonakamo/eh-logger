@@ -19,10 +19,18 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   // begin the hold timer
   function beginHoldTimer():void
   {
+    clearTimeout(holdTimer.current);
     holdTimer.current=setTimeout(()=>{
-      props.holdCompleted(props.entry);
-      preventNav.current=true;
-      setHolding(false);
+      setHolding((gotHolding:boolean)=>{
+        if (!gotHolding)
+        {
+          return false;
+        }
+
+        props.holdCompleted(props.entry);
+        preventNav.current=true;
+        return false;
+      });
     },_deleteTiming);
     setHolding(true);
   }
