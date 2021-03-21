@@ -49,10 +49,23 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   // prevent navigation after a hold event completed
   function linkClick(e:React.MouseEvent):void
   {
+    e.preventDefault();
+
     if (preventNav.current)
     {
-      e.preventDefault();
+      return;
     }
+
+    if (e.ctrlKey)
+    {
+      window.location.href=props.entry.link;
+      return;
+    }
+
+    chrome.tabs.create({
+      active:false,
+      url:props.entry.link
+    });
   }
 
   const dateText:string=luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
