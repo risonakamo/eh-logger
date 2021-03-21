@@ -19,6 +19,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   // begin the hold timer
   function beginHoldTimer():void
   {
+    console.log("%cbegin timer","color:blue");
     holdTimer.current=setTimeout(()=>{
       props.holdCompleted(props.entry);
       preventNav.current=true;
@@ -30,8 +31,10 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   // end the hold timer
   function endHoldTimer():void
   {
+    console.log("trying end hold timer");
     if (holding)
     {
+      console.log("%cend holdtimer","color:red");
       clearTimeout(holdTimer.current);
       preventNav.current=false;
       setHolding(false);
