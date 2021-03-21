@@ -1,5 +1,6 @@
-import React,{useState,useRef} from "react";
+import React,{useState,useRef,useEffect} from "react";
 import luxon from "luxon";
+import useMouseLeave from "use-mouse-leave";
 
 const _deleteTiming:number=1550; //time user show hold to perform delete action (ms)
 
@@ -15,6 +16,15 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   const [holding,setHolding]=useState<boolean>(false); // holding in progress
   const holdTimer=useRef<number>();
   const preventNav=useRef<boolean>(false);
+  const [mouseLeft,mouseLeaveRef]=useMouseLeave();
+
+  useEffect(()=>{
+    if (mouseLeft)
+    {
+      console.log("mouse left");
+      endHoldTimer();
+    }
+  },[mouseLeft]);
 
   // begin the hold timer
   function beginHoldTimer():void
@@ -55,7 +65,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
 
   return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}
     onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick} onDragLeave={endHoldTimer}
-    onMouseOut={endHoldTimer}
+    onMouseOut={endHoldTimer} ref={mouseLeaveRef}
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
