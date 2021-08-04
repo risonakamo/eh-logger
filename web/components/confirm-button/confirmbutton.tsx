@@ -15,7 +15,7 @@ interface ConfirmButtonState
 
 export default class ConfirmButton extends React.Component
 {
-  props:ConfirmButtonProps
+  declare props:ConfirmButtonProps
   state:ConfirmButtonState
 
   holdTimer:number
@@ -29,11 +29,13 @@ export default class ConfirmButton extends React.Component
     this.state={
       holding:false
     };
+
+    this.holdTimer=0;
   }
 
   beginHoldTimer():void
   {
-    this.holdTimer=setTimeout(()=>{
+    this.holdTimer=window.setTimeout(()=>{
       this.props.onHoldComplete();
     },2000);
 
@@ -53,7 +55,7 @@ export default class ConfirmButton extends React.Component
     return <div className="confirm-zone" onClick={this.props.onClick} onMouseDown={this.beginHoldTimer}
       onMouseUp={this.endHoldTimer} onMouseLeave={this.endHoldTimer}>
       <div className={`fill-rect ${holdingClass}`}></div>
-      <img src="/imgs/log-icon.png"/>
+      <img src="/assets/imgs/log-icon.png"/>
     </div>;
   }
 }

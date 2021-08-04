@@ -22,7 +22,15 @@ module.exports={
                 use:{
                     loader:"babel-loader",
                     options:{
-                        presets:["@babel/preset-react","@babel/preset-typescript"]
+                        presets:[
+                            "@babel/preset-react",
+                            [
+                                "@babel/preset-typescript",
+                                {
+                                    allowDeclareFields:true
+                                }
+                            ]
+                        ]
                     }
                 }
             },
@@ -50,15 +58,13 @@ module.exports={
         // ]),
     ],
 
-    optimization:{
-        splitChunks:{
-            chunks:"all",
-            automaticNameDelimiter:"-"
-        }
-    },
-
     resolve:{
-        extensions:[".tsx",".ts",".jsx",".js"]
+        extensions:[".tsx",".ts",".jsx",".js"],
+        alias:{
+            css:`${__dirname}/web/css`,
+            components:`${__dirname}/web/components`,
+            lib:`${__dirname}/web/lib`
+        }
     },
 
     devtool:"cheap-module-source-map",
@@ -66,14 +72,6 @@ module.exports={
     stats:{
         entrypoints:false,
         modules:false,
-        chunks:false,
-        // assets:false
-    },
-
-    externals:{
-        "react":"React",
-        "react-dom":"ReactDOM",
-        "luxon":"luxon",
-        "lodash":"_"
+        chunks:false
     }
 };

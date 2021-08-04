@@ -1,5 +1,5 @@
 import React,{useState,useRef} from "react";
-import luxon from "luxon";
+import {DateTime} from "luxon";
 
 const _deleteTiming:number=1550; //time user show hold to perform delete action (ms)
 
@@ -20,7 +20,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   function beginHoldTimer():void
   {
     clearTimeout(holdTimer.current);
-    holdTimer.current=setTimeout(()=>{
+    holdTimer.current=window.setTimeout(()=>{
       setHolding((gotHolding:boolean)=>{
         if (!gotHolding)
         {
@@ -68,7 +68,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
     });
   }
 
-  const dateText:string=luxon.DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
+  const dateText:string=DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
   const holdingClass:string=holding?"filling":"";
 
   return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}

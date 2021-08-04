@@ -1,7 +1,7 @@
 import React,{useRef} from "react";
 
-import ColumnButton from "../column-button/column-button";
-import {addMultipleWithMerge} from "../../../database/logger-database";
+import ColumnButton from "components/column-button/column-button";
+import {addMultipleWithMerge} from "lib/logger-database";
 
 import "./import-button.less";
 
@@ -31,7 +31,7 @@ export default function ImportButton(props:ImportButtonProps):JSX.Element
   }
 
   return <>
-    <ColumnButton onClick={openFileInput} text="Import Logs" icon="/imgs/importicon2.png"/>
+    <ColumnButton onClick={openFileInput} text="Import Logs" icon="/assets/imgs/importicon2.png"/>
     <input type="file" className="import-file-input" ref={fileInput} onChange={fileSubmitted}/>
   </>;
 }

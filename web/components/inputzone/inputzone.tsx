@@ -17,7 +17,7 @@ interface InputZoneState
 
 export default class InputZone extends React.Component
 {
-  props:InputZoneProps
+  declare props:InputZoneProps
   state:InputZoneState
 
   firstInputEvent:boolean //placeholder will show based on props until the first input event,

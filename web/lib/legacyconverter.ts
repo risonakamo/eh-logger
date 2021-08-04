@@ -1,6 +1,6 @@
 import _ from "lodash";
 
-import {logEntrySort} from "../../../database/logger-database";
+import {logEntrySort} from "lib/logger-database";
 
 // convert json of old EH HISTORY logs into new format.
 // returns json of new format.

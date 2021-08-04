@@ -6,7 +6,11 @@
         "target":"ESNext",
         "esModuleInterop":true,
         "baseUrl":".",
-        "moduleResolution":"node"
+        "moduleResolution":"node",
+        "paths":{
+            "components/*":["web/components/*"],
+            "lib/*":["web/lib/*"]
+        }
     },
     "include":[
         "**/*.ts",

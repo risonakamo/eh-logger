@@ -1,12 +1,12 @@
 import React from "react";
-import luxon from "luxon";
+import {DateTime} from "luxon";
 
-import ColumnButton from "../column-button/column-button";
-import {getLogEntries,logEntrySort} from "../../../database/logger-database";
+import ColumnButton from "components/column-button/column-button";
+import {getLogEntries,logEntrySort} from "lib/logger-database";
 
 export default function ExportButton():JSX.Element
 {
-  return <ColumnButton onClick={doExport} text="Export Logs" icon="/imgs/export-icon.png"/>;
+  return <ColumnButton onClick={doExport} text="Export Logs" icon="/assets/imgs/export-icon.png"/>;
 }
 
 // initiate logs download.
@@ -14,7 +14,7 @@ async function doExport(e:React.MouseEvent):Promise<void>
 {
   e.preventDefault();
 
-  var timestamp:string=luxon.DateTime.local().toFormat("yyMMdd_HHmm");
+  var timestamp:string=DateTime.local().toFormat("yyMMdd_HHmm");
 
   chrome.downloads.download({
     url:"data:application/json;base64,"+btoa(unescape(encodeURIComponent(await logEntriesFormatted()))),

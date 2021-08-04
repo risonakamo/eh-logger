@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import InputZone from "./components/inputzone/inputzone";
-import ConfirmButton from "./components/confirm-button/confirmbutton";
-import runPageParser from "../pageparsers/parserrunner";
-import {insertLogEntry,attachWindowFunctions} from "../database/logger-database";
+import InputZone from "components/inputzone/inputzone";
+import ConfirmButton from "components/confirm-button/confirmbutton";
+import runPageParser from "lib/pageparsers/parserrunner";
+import {insertLogEntry,attachWindowFunctions} from "lib/logger-database";
 
 import "./popup-index.less";
 
@@ -63,7 +63,7 @@ class PopupMain extends React.Component
   openViewerPage():void
   {
     chrome.tabs.create({
-      url:"/logviewer/logviewer-index.html",
+      url:"/web/pages/logviewer/logviewer-index.html",
       active:true
     });
     window.close();
