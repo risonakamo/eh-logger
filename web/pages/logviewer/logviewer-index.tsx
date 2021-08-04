@@ -8,6 +8,7 @@ import LogsTable2 from "components/logs-table2/logstable2";
 import convertEhHistoryLogs from "lib/legacyconverter";
 
 import "./logviewer-index.less";
+import "simplebar/dist/simplebar.css";
 
 function LogviewerMain():JSX.Element
 {

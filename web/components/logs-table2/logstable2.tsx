@@ -1,4 +1,5 @@
 import React from "react";
+import SimpleBar from "simplebar-react";
 
 import LogRow2 from "./logrow2";
 
@@ -19,12 +20,12 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
       <div className="log-col group">GROUP</div>
       <div className="log-col name">NAME</div>
     </div>
-    <div className="the-log-rows" data-simplebar>
+    <SimpleBar className="the-log-rows">
       <div>
         {props.logs.map((x:LogEntry,i:number)=>{
           return <LogRow2 entry={x} key={i} holdCompleted={props.deleteEntry}/>
         })}
       </div>
-    </div>
+    </SimpleBar>
   </div>;
 }
