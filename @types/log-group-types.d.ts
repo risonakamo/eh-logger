@@ -1,16 +1,12 @@
 /** combined LogEntrys into LogGroup */
 interface LogGroup
 {
-    name:string
     group:string
+
+    //latest date
     date:string
 
-    type:EntryType
-    link:string
-
-    names:string[]
-    groups:string[]
-    dates:string[]
+    logs:LogEntry[]
 }
 
 // LogEntrys grouped by link
