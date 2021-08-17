@@ -1,11 +1,13 @@
 import React,{useEffect,useState} from "react";
 import ReactDOM from "react-dom";
 
-import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import ExportButton from "components/exportbutton/exportbutton";
 import ImportButton from "components/import-button/import-button";
 import LogsTable2 from "components/logs-table2/logstable2";
+
+import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
+import {determineLogGroups} from "lib/log-grouper";
 
 import "./logviewer-index.less";
 import "simplebar/dist/simplebar.css";
@@ -33,6 +35,7 @@ function LogviewerMain():JSX.Element
   // given logs, sort and set them, and re render.
   function sortAndSetLogs(logs:LogEntry[]):void
   {
+    console.log(determineLogGroups(logs));
     setLogs(logs.sort(logEntrySort));
   }
 
