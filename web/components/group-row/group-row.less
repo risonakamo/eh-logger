@@ -1,0 +1,16 @@
+@import (reference) "~css/types-colours";
+@import (reference) "~css/shared-colours";
+@import (reference) "~css/log-table";
+
+.group-row
+{
+    .log-row-shared();
+
+    .log-col
+    {
+        &.group
+        {
+            width: auto;
+        }
+    }
+}

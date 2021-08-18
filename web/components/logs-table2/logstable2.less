@@ -1,5 +1,6 @@
 @import (reference) "~css/types-colours";
 @import (reference) "~css/shared-colours";
+@import (reference) "~css/log-table";
 
 // the total of these values must equal the delete timing of the logrow, or shorter
 // (animation will cut off if shorter)
@@ -22,51 +23,10 @@
 
     .log-row
     {
-        height: 23px;
-        display: flex;
+        .log-row-shared();
         position: relative;
-        padding: 2px 0 4px 0;
-        font-size: 13px;
         opacity: 1;
-        box-sizing: border-box;
-        transition: .15s background-color;
-        overflow: hidden;
-        --type-colour: @default-green;
-        --type-colour-faded: fade(@default-green,20%);
         .generate-colour-classes();
-
-        .log-col
-        {
-            padding-left: 8px;
-            box-sizing: border-box;
-            white-space: nowrap;
-            overflow: hidden;
-
-            &.date
-            {
-                width: 90px;
-                min-width: 90px;
-            }
-
-            &.type
-            {
-                width: 30px;
-                min-width: 30px;
-                padding-left: 0;
-                color: var(--type-colour);
-            }
-
-            &.group
-            {
-                width: 130px;
-                min-width: 130px;
-            }
-        }
-
-        &:hover
-        {
-            background-color: var(--type-colour-faded);
-        }
 
         &.header-row
         {

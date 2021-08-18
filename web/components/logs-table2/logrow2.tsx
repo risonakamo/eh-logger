@@ -1,5 +1,6 @@
 import React,{useState,useRef} from "react";
-import {DateTime} from "luxon";
+
+import {logrowDateformat} from "lib/log-row-helpers";
 
 const _deleteTiming:number=1550; //time user show hold to perform delete action (ms)
 
@@ -68,7 +69,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
     });
   }
 
-  const dateText:string=DateTime.fromJSDate(new Date(props.entry.date)).toFormat("MM/dd HH:mm");
+  const dateText:string=logrowDateformat(props.entry.date);
   const holdingClass:string=holding?"filling":"";
 
   return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}

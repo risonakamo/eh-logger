@@ -1,0 +1,47 @@
+.log-row-shared()
+{
+    display: flex;
+    height: 23px;
+    padding: 2px 0 4px 0;
+    font-size: 13px;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: .15s background-color;
+    overflow: hidden;
+    --type-colour: @default-green;
+    --type-colour-faded: fade(@default-green,20%);
+
+    .log-col
+    {
+        padding-left: 8px;
+        box-sizing: border-box;
+        white-space: nowrap;
+        overflow: hidden;
+
+        &.date
+        {
+            width: 120px;
+            min-width: 120px;
+        }
+
+        &.type
+        {
+            width: 30px;
+            min-width: 30px;
+            padding-left: 0;
+            color: var(--type-colour);
+        }
+
+        &.group
+        {
+            width: 130px;
+            min-width: 130px;
+        }
+    }
+
+    &:hover
+    {
+        background-color: var(--type-colour-faded);
+    }
+}
