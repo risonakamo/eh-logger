@@ -35,14 +35,13 @@ function LogviewerMain():JSX.Element
   // given logs, sort and set them, and re render.
   function sortAndSetLogs(logs:LogEntry[]):void
   {
-    console.log(determineLogGroups(logs));
     setLogs(logs.sort(logEntrySort));
   }
 
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
-        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry}/>
+        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry} groupMode={true}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
