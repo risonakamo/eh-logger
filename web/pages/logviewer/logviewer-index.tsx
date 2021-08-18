@@ -1,13 +1,14 @@
 import React,{useEffect,useState} from "react";
 import ReactDOM from "react-dom";
+import _ from "lodash";
 
 import ExportButton from "components/exportbutton/exportbutton";
 import ImportButton from "components/import-button/import-button";
 import LogsTable2 from "components/logs-table2/logstable2";
+import ColumnButton from "components/column-button/column-button";
 
 import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
-import {determineLogGroups} from "lib/log-grouper";
 
 import "./logviewer-index.less";
 import "simplebar/dist/simplebar.css";
@@ -38,15 +39,28 @@ function LogviewerMain():JSX.Element
     setLogs(logs.sort(logEntrySort));
   }
 
+  /** shuffle log order */
+  function shuffleSetLogs():void
+  {
+    setLogs(_.shuffle(logs));
+  }
+
+  function h_shuffle(e:React.MouseEvent):void
+  {
+    e.preventDefault();
+    shuffleSetLogs();
+  }
+
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
-        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry} groupMode={true}/>
+        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry} groupMode={false}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
           <ExportButton/>
           <ImportButton importedLogs={sortAndSetLogs}/>
+          <ColumnButton onClick={h_shuffle} text="Shuffle" icon=""/>
         </div>
       </div>
     </div>
