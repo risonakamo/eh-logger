@@ -5,13 +5,12 @@ import _ from "lodash";
 import LogRow2 from "./logrow2";
 import GroupRow from "components/group-row/group-row";
 
-import {determineLogGroups} from "lib/log-grouper";
-
 import "./logstable2.less";
 
 interface LogsTableProps
 {
   logs:LogEntry[]
+  loggroups:LogGroup[]
 
   groupMode:boolean
 
@@ -29,7 +28,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
 
   function renderGroupRows():JSX.Element[]
   {
-    return _.map(determineLogGroups(props.logs),(x:LogGroup,i:number):JSX.Element=>{
+    return _.map(props.loggroups,(x:LogGroup,i:number):JSX.Element=>{
       return <GroupRow key={i} loggroup={x}/>;
     });
   }

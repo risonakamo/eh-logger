@@ -9,6 +9,7 @@ import ColumnButton from "components/column-button/column-button";
 
 import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
+import {determineLogGroups} from "lib/log-grouper";
 
 import "./logviewer-index.less";
 import "simplebar/dist/simplebar.css";
@@ -16,6 +17,10 @@ import "simplebar/dist/simplebar.css";
 function LogviewerMain():JSX.Element
 {
   const [logs,setLogs]=useState<LogEntry[]>([]);
+
+  const [theLoggroups,setLogGroups]=useState<LogGroup[]>([]);
+
+  const [isGroupMode,setGroupMode]=useState<boolean>(false);
 
   // component did mount.
   useEffect(()=>{
@@ -37,30 +42,50 @@ function LogviewerMain():JSX.Element
   function sortAndSetLogs(logs:LogEntry[]):void
   {
     setLogs(logs.sort(logEntrySort));
+    setLogGroups(determineLogGroups(logs));
   }
 
-  /** shuffle log order */
-  function shuffleSetLogs():void
-  {
-    setLogs(_.shuffle(logs));
-  }
-
+  /** handle click shuffle button */
   function h_shuffle(e:React.MouseEvent):void
   {
     e.preventDefault();
-    shuffleSetLogs();
+
+    if (!isGroupMode)
+    {
+      setLogs(_.shuffle(logs));
+    }
+
+    else
+    {
+      setLogGroups(_.shuffle(theLoggroups));
+    }
+  }
+
+  /** handle toggle modes button */
+  function h_toggleGroupMode(e:React.MouseEvent):void
+  {
+    e.preventDefault();
+    setGroupMode(!isGroupMode);
+  }
+
+  var groupModeToggleText:string="Group Mode";
+  if (isGroupMode)
+  {
+    groupModeToggleText="Entry Mode";
   }
 
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
-        <LogsTable2 logs={logs} deleteEntry={doDeleteEntry} groupMode={false}/>
+        <LogsTable2 logs={logs} loggroups={theLoggroups} deleteEntry={doDeleteEntry}
+          groupMode={isGroupMode}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
           <ExportButton/>
           <ImportButton importedLogs={sortAndSetLogs}/>
           <ColumnButton onClick={h_shuffle} text="Shuffle" icon=""/>
+          <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText} icon=""/>
         </div>
       </div>
     </div>
