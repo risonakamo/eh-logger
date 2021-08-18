@@ -34,30 +34,31 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     });
   }
 
-  // var rows:JSX.Element[];
-  // if (!props.groupMode)
-  // {
-  //   rows=renderRows();
-  // }
+  var rows:JSX.Element[];
+  var typeColText:string="T";
+  var nameColText:string="NAME";
 
-  // else
-  // {
-  //   rows=renderGroupRows();
-  // }
+  if (!props.groupMode)
+  {
+    rows=renderRows();
+  }
 
-  var rows:JSX.Element[]=renderRows();
-  var rows2:JSX.Element[]=renderGroupRows();
+  else
+  {
+    rows=renderGroupRows();
+    typeColText="C";
+    nameColText="";
+  }
 
   return <div className="logs-table2">
     <div className="log-row header-row">
       <div className="log-col date">DATE</div>
-      <div className="log-col type">T</div>
+      <div className="log-col type">{typeColText}</div>
       <div className="log-col group">GROUP</div>
-      <div className="log-col name">NAME</div>
+      <div className="log-col name">{nameColText}</div>
     </div>
     <SimpleBar className="the-log-rows">
       <div>
-        {rows2}
         {rows}
       </div>
     </SimpleBar>
