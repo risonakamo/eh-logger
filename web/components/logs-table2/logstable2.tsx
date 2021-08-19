@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import SimpleBar from "simplebar-react";
 import _ from "lodash";
 
@@ -19,6 +19,27 @@ interface LogsTableProps
 
 export default function LogsTable2(props:LogsTableProps):JSX.Element
 {
+  const [theExpandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
+
+  /** handle clicked group row. toggle expansion */
+  function h_grouprowClick(loggroup:LogGroup):void
+  {
+    var newexpanded:Set<string>=new Set(theExpandedGroups);
+
+    if (theExpandedGroups.has(loggroup.group))
+    {
+      newexpanded.delete(loggroup.group);
+    }
+
+    else
+    {
+      newexpanded.add(loggroup.group);
+    }
+
+    setExpandedGroups(newexpanded);
+  }
+
+  /** ---- RENDER ---- */
   function renderRows():JSX.Element[]
   {
     return props.logs.map((x:LogEntry,i:number)=>{
@@ -29,7 +50,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   function renderGroupRows():JSX.Element[]
   {
     return _.map(props.loggroups,(x:LogGroup,i:number):JSX.Element=>{
-      return <GroupRow key={i} loggroup={x}/>;
+      return <GroupRow key={i} loggroup={x} onClick={h_grouprowClick}/>;
     });
   }
 
