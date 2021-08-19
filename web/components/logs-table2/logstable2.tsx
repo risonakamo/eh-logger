@@ -40,10 +40,11 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   }
 
   /** ---- RENDER ---- */
-  function renderRows(logs:LogEntry[],prekey:string=""):JSX.Element[]
+  function renderRows(logs:LogEntry[],groupMode:boolean,prekey:string):JSX.Element[]
   {
     return _.map(logs,(x:LogEntry,i:number)=>{
-      return <LogRow2 entry={x} key={`${prekey}_${i}`} holdCompleted={props.deleteEntry}/>
+      return <LogRow2 entry={x} key={`${prekey}_${i}`} holdCompleted={props.deleteEntry}
+        groupSubEntry={groupMode}/>
     });
   }
 
@@ -61,7 +62,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
       // other wise return the group, and its inner log entries
       return [
         grouprow,
-        ...renderRows(x.logs,x.group)
+        ...renderRows(x.logs,true,x.group)
       ]
     });
   }
@@ -72,7 +73,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
 
   if (!props.groupMode)
   {
-    rows=renderRows(props.logs);
+    rows=renderRows(props.logs,false,"");
   }
 
   else

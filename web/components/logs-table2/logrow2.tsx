@@ -1,4 +1,5 @@
 import React,{useState,useRef} from "react";
+import cx from "classnames";
 
 import {logrowDateformat} from "lib/log-row-helpers";
 
@@ -7,6 +8,10 @@ const _deleteTiming:number=1550; //time user show hold to perform delete action 
 interface LogsRowProps
 {
   entry:LogEntry // the entry
+
+  // display as a group subentry
+  groupSubEntry?:boolean
+
   holdCompleted(entry:LogEntry):void // function to call with the row's entry when hold
                                      // action is completed on the row
 }
@@ -72,14 +77,24 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   const dateText:string=logrowDateformat(props.entry.date);
   const holdingClass:string=holding?"filling":"";
 
-  return <a className={`log-row ${props.entry.type}`} href={props.entry.link} onMouseDown={beginHoldTimer}
-    onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick} onDragLeave={endHoldTimer}
-    onMouseOut={endHoldTimer}
+  var groupCol:JSX.Element|undefined;
+  if (!props.groupSubEntry)
+  {
+    groupCol=<div className="log-col group" title={props.entry.group}>{props.entry.group}</div>;
+  }
+
+  const topclass={
+    "sub-entry":props.groupSubEntry
+  };
+
+  return <a className={cx("log-row",props.entry.type,topclass)} href={props.entry.link}
+    onMouseDown={beginHoldTimer} onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick}
+    onDragLeave={endHoldTimer} onMouseOut={endHoldTimer}
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
     <div className="log-col type">{getAbbrvType(props.entry.type)}</div>
-    <div className="log-col group" title={props.entry.group}>{props.entry.group}</div>
+    {groupCol}
     <div className="log-col name" title={props.entry.name}>{props.entry.name}</div>
   </a>;
 }
