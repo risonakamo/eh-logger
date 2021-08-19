@@ -40,17 +40,29 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   }
 
   /** ---- RENDER ---- */
-  function renderRows():JSX.Element[]
+  function renderRows(logs:LogEntry[],prekey:string=""):JSX.Element[]
   {
-    return props.logs.map((x:LogEntry,i:number)=>{
-      return <LogRow2 entry={x} key={i} holdCompleted={props.deleteEntry}/>
+    return _.map(logs,(x:LogEntry,i:number)=>{
+      return <LogRow2 entry={x} key={`${prekey}_${i}`} holdCompleted={props.deleteEntry}/>
     });
   }
 
   function renderGroupRows():JSX.Element[]
   {
-    return _.map(props.loggroups,(x:LogGroup,i:number):JSX.Element=>{
-      return <GroupRow key={i} loggroup={x} onClick={h_grouprowClick}/>;
+    return _.flatMap(props.loggroups,(x:LogGroup,i:number):JSX.Element[]=>{
+      var grouprow:JSX.Element=<GroupRow key={i} loggroup={x} onClick={h_grouprowClick}/>;
+
+      // if group not expanded, just return the group
+      if (!theExpandedGroups.has(x.group))
+      {
+        return [grouprow];
+      }
+
+      // other wise return the group, and its inner log entries
+      return [
+        grouprow,
+        ...renderRows(x.logs,x.group)
+      ]
     });
   }
 
@@ -60,7 +72,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
 
   if (!props.groupMode)
   {
-    rows=renderRows();
+    rows=renderRows(props.logs);
   }
 
   else
