@@ -51,10 +51,13 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   function renderGroupRows():JSX.Element[]
   {
     return _.flatMap(props.loggroups,(x:LogGroup,i:number):JSX.Element[]=>{
-      var grouprow:JSX.Element=<GroupRow key={i} loggroup={x} onClick={h_grouprowClick}/>;
+      var isexpanded:boolean=theExpandedGroups.has(x.group);
+
+      var grouprow:JSX.Element=<GroupRow key={i} loggroup={x} onClick={h_grouprowClick}
+        expanded={isexpanded}/>;
 
       // if group not expanded, just return the group
-      if (!theExpandedGroups.has(x.group))
+      if (!isexpanded)
       {
         return [grouprow];
       }
