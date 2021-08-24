@@ -51,6 +51,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   }
 
   /** ---- RENDER ---- */
+  /** render standard entry rows when table is in normal row mode */
   function renderRows(logs:LogEntry[],groupMode:boolean,prekey:string):JSX.Element[]
   {
     return _.map(logs,(x:LogEntry,i:number)=>{
@@ -59,6 +60,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     });
   }
 
+  /** render rows of the table when table is in group mode */
   function renderGroupRows():JSX.Element[]
   {
     return _.flatMap(props.loggroups,(x:LogGroup,i:number):JSX.Element[]=>{
@@ -81,6 +83,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     });
   }
 
+  /** create group header with clickable col names */
   function renderGroupHeader(groupMode:boolean):JSX.Element[]
   {
     var typeColText:string="T";
