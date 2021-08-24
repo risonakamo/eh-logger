@@ -124,7 +124,17 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     ];
 
     return _.map(cols,(x:ColData):JSX.Element=>{
-      return <div className={cx("log-col",x.className)} key={x.text}>
+      /** handle a col header clicked. calls the overall table's oncolclick on the col header's col type.
+       *  no sort type is unsortable, does nothing */
+      function h_tableColClick():void
+      {
+        if (x.colType)
+        {
+          props.onColNameClick(x.colType);
+        }
+      }
+
+      return <div className={cx("log-col",x.className)} key={x.text} onClick={h_tableColClick}>
         {x.text}
       </div>;
     });
