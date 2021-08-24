@@ -22,6 +22,11 @@ function LogviewerMain():JSX.Element
 
   const [isGroupMode,setGroupMode]=useState<boolean>(false);
 
+  const [theSortMode,setSortMode]=useState<SortMode>({
+    col:"date",
+    desc:true
+  });
+
   // component did mount.
   useEffect(()=>{
     (window as any).convertEhHistoryLogs=convertEhHistoryLogs;
@@ -32,6 +37,7 @@ function LogviewerMain():JSX.Element
     })();
   },[]);
 
+  /**---- STATE CONTROL ----*/
   // perform delete on an entry and re-render.
   async function doDeleteEntry(entry:LogEntry):Promise<void>
   {
@@ -45,6 +51,28 @@ function LogviewerMain():JSX.Element
     setLogGroups(determineLogGroups(logs));
   }
 
+  /** set the sort mode to a new mode. if the new mode is the same as the current mode, reverse the
+   * sort direction. setting new mode resets direction */
+  function changeSortMode(newMode:SortModeCol):void
+  {
+    if (theSortMode.col==newMode)
+    {
+      setSortMode({
+        ...theSortMode,
+        desc:!theSortMode.desc
+      });
+    }
+
+    else
+    {
+      setSortMode({
+        col:newMode,
+        desc:true
+      });
+    }
+  }
+
+  /**---- HANDLERS ----*/
   /** handle click shuffle button */
   function h_shuffle(e:React.MouseEvent):void
   {
@@ -68,6 +96,11 @@ function LogviewerMain():JSX.Element
     setGroupMode(!isGroupMode);
   }
 
+  function h_tableColClick(col:SortModeCol):void
+  {
+    console.log(col);
+  }
+
   var groupModeToggleText:string="Group Mode";
   if (isGroupMode)
   {
@@ -78,7 +111,7 @@ function LogviewerMain():JSX.Element
     <div className="container">
       <div className="log-table-contain container-col">
         <LogsTable2 logs={logs} loggroups={theLoggroups} deleteEntry={doDeleteEntry}
-          groupMode={isGroupMode}/>
+          groupMode={isGroupMode} sortMode={theSortMode} onColNameClick={h_tableColClick}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">

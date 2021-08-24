@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import SimpleBar from "simplebar-react";
 import _ from "lodash";
+import cx from "classnames";
 
 import LogRow2 from "./logrow2";
 import GroupRow from "components/group-row/group-row";
@@ -14,7 +15,17 @@ interface LogsTableProps
 
   groupMode:boolean
 
+  sortMode:SortMode
+
   deleteEntry(entry:LogEntry):void
+  onColNameClick(col:SortModeCol):void
+}
+
+interface ColData
+{
+  text:string
+  className:string
+  colType?:SortModeCol
 }
 
 export default function LogsTable2(props:LogsTableProps):JSX.Element
@@ -70,9 +81,53 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     });
   }
 
+  function renderGroupHeader(groupMode:boolean):JSX.Element[]
+  {
+    var typeColText:string="T";
+    var nameColText:string="NAME";
+
+    var typeColType:SortModeCol="type";
+    var nameColType:SortModeCol|undefined="name";
+
+    if (groupMode)
+    {
+      typeColText="C";
+      nameColText="";
+      typeColType="count";
+      nameColType=undefined;
+    }
+
+    const cols:ColData[]=[
+      {
+        text:"DATE",
+        className:"date",
+        colType:"date"
+      },
+      {
+        text:typeColText,
+        className:"type",
+        colType:typeColType
+      },
+      {
+        text:"GROUP",
+        className:"group",
+        colType:"group"
+      },
+      {
+        text:nameColText,
+        className:"name",
+        colType:nameColType
+      }
+    ];
+
+    return _.map(cols,(x:ColData):JSX.Element=>{
+      return <div className={cx("log-col",x.className)} key={x.text}>
+        {x.text}
+      </div>;
+    });
+  }
+
   var rows:JSX.Element[];
-  var typeColText:string="T";
-  var nameColText:string="NAME";
 
   if (!props.groupMode)
   {
@@ -82,16 +137,11 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   else
   {
     rows=renderGroupRows();
-    typeColText="C";
-    nameColText="";
   }
 
   return <div className="logs-table2">
     <div className="log-row header-row">
-      <div className="log-col date">DATE</div>
-      <div className="log-col type">{typeColText}</div>
-      <div className="log-col group">GROUP</div>
-      <div className="log-col name">{nameColText}</div>
+      {renderGroupHeader(props.groupMode)}
     </div>
     <SimpleBar className="the-log-rows">
       <div>
