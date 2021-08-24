@@ -134,7 +134,11 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
         }
       }
 
-      return <div className={cx("log-col",x.className)} key={x.text} onClick={h_tableColClick}>
+      const colClass={
+        unsortable:!x.colType
+      };
+
+      return <div className={cx("log-col",x.className,colClass)} key={x.text} onClick={h_tableColClick}>
         {x.text}
       </div>;
     });
