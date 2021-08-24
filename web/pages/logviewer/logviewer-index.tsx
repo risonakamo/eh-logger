@@ -96,9 +96,10 @@ function LogviewerMain():JSX.Element
     setGroupMode(!isGroupMode);
   }
 
+  /** clicked sortable table header. sort by the clicked col */
   function h_tableColClick(col:SortModeCol):void
   {
-    console.log(col);
+    changeSortMode(col);
   }
 
   var groupModeToggleText:string="Group Mode";

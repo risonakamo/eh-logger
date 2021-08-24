@@ -138,8 +138,22 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
         unsortable:!x.colType
       };
 
+      var ascDescIcon:string="";
+      if (props.sortMode.col==x.colType)
+      {
+        if (props.sortMode.desc)
+        {
+          ascDescIcon="▼";
+        }
+
+        else
+        {
+          ascDescIcon="▲";
+        }
+      }
+
       return <div className={cx("log-col",x.className,colClass)} key={x.text} onClick={h_tableColClick}>
-        {x.text}
+        {x.text} {ascDescIcon}
       </div>;
     });
   }
