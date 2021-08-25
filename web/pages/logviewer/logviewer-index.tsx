@@ -10,6 +10,7 @@ import ColumnButton from "components/column-button/column-button";
 import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
 import {determineLogGroups} from "lib/log-grouper";
+import {sortLogs,sortLogGroups} from "lib/log-sort";
 
 import "./logviewer-index.less";
 import "simplebar/dist/simplebar.css";
@@ -44,36 +45,62 @@ function LogviewerMain():JSX.Element
     sortAndSetLogs(await deleteEntry(entry));
   }
 
-  // given logs, sort and set them, and re render.
+  /** given logs, sort and set them, and re render. if in group mode, sort groups instead. */
   function sortAndSetLogs(logs:LogEntry[]):void
   {
-    setLogs(logs.sort(logEntrySort));
-    setLogGroups(determineLogGroups(logs));
+    setLogsWithSort(logs,theSortMode,isGroupMode);
   }
 
-  /** set the sort mode to a new mode. if the new mode is the same as the current mode, reverse the
-   * sort direction. setting new mode resets direction */
-  function changeSortMode(newMode:SortModeCol):void
+  /** set the logs with the given sort mode */
+  function setLogsWithSort(logs:LogEntry[],sortmode:SortMode,groupMode:boolean):void
   {
-    if (theSortMode.col==newMode)
+    if (!groupMode)
     {
-      setSortMode({
-        ...theSortMode,
-        desc:!theSortMode.desc
-      });
+      setLogs(sortLogs(logs,sortmode.col,sortmode.desc));
     }
 
     else
     {
-      setSortMode({
-        col:newMode,
-        desc:true
-      });
+      setLogGroups(sortLogGroups(determineLogGroups(logs),sortmode.col,sortmode.desc))
     }
   }
 
+  /** set the sort mode to a new mode. if the new mode is the same as the current mode, reverse the
+   * sort direction. setting new mode resets direction. also call sort and set logs to update logs order.
+   * give it reset to switch to the specified mode but always start in desc order. */
+  function changeSortMode(newMode:SortModeCol,groupMode:boolean,reset:boolean=false):void
+  {
+    var newsortmode:SortMode;
+
+    if (theSortMode.col==newMode && !reset)
+    {
+      newsortmode={
+        ...theSortMode,
+        desc:!theSortMode.desc
+      };
+    }
+
+    else
+    {
+      newsortmode={
+        col:newMode,
+        desc:true
+      };
+    }
+
+    setSortMode(newsortmode);
+    setLogsWithSort(logs,newsortmode,groupMode);
+  }
+
+  /** set group mode and reset sort to date */
+  function changeGroupMode(newmode:boolean):void
+  {
+    setGroupMode(newmode);
+    changeSortMode("date",newmode,true);
+  }
+
   /**---- HANDLERS ----*/
-  /** handle click shuffle button */
+  /** handle click shuffle button. shuffle log entries or log groups based on mode */
   function h_shuffle(e:React.MouseEvent):void
   {
     e.preventDefault();
@@ -89,17 +116,17 @@ function LogviewerMain():JSX.Element
     }
   }
 
-  /** handle toggle modes button */
+  /** handle toggle modes button. toggle the group mode */
   function h_toggleGroupMode(e:React.MouseEvent):void
   {
     e.preventDefault();
-    setGroupMode(!isGroupMode);
+    changeGroupMode(!isGroupMode);
   }
 
   /** clicked sortable table header. sort by the clicked col */
   function h_tableColClick(col:SortModeCol):void
   {
-    changeSortMode(col);
+    changeSortMode(col,isGroupMode);
   }
 
   var groupModeToggleText:string="Group Mode";
