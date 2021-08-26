@@ -66,4 +66,4 @@ const logViewerStore=configureStore({
     })
 });
 
-export default LogviewerStore;
+export default logViewerStore;

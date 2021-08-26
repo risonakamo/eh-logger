@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
+import {Provider,useSelector} from "react-redux";
 
 import ExportButton from "components/exportbutton/exportbutton";
 import ImportButton from "components/import-button/import-button";
@@ -11,6 +12,8 @@ import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/
 import convertEhHistoryLogs from "lib/legacyconverter";
 import {determineLogGroups} from "lib/log-grouper";
 import {sortLogs,sortLogGroups} from "lib/log-sort";
+
+import logviewerStore from "store/logviewer/logviewer-store";
 
 import "./logviewer-index.less";
 import "simplebar/dist/simplebar.css";
@@ -155,7 +158,13 @@ function LogviewerMain():JSX.Element
 
 function main()
 {
-  ReactDOM.render(<LogviewerMain/>,document.querySelector(".main"));
+  ReactDOM.render(
+    <Provider store={logviewerStore}>
+      <LogviewerMain/>
+    </Provider>,
+    document.querySelector(".main")
+  );
+
   attachWindowFunctions();
 }
 
