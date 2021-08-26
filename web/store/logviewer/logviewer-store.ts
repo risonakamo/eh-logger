@@ -1,9 +1,5 @@
 import {combineReducers} from "redux";
 import {createReducer,configureStore,createAction} from "@reduxjs/toolkit";
-import {createSelector} from "reselect";
-
-import {sortLogs,sortLogGroups} from "lib/log-sort";
-import {determineLogGroups} from "lib/log-grouper";
 
 /** override the logs */
 const setLogs=createAction<LogEntry[]>("setLogs");
@@ -69,39 +65,5 @@ const logViewerStore=configureStore({
         sortMode:sortModeReducer
     })
 });
-
-/** retrieve from store the logs */
-function logsSelect(store:LogviewerStore):LogEntry[]
-{
-    return store.logs;
-}
-
-/** retrieve from store the sortmode */
-function sortModeSelect(store:LogviewerStore):SortMode
-{
-    return store.sortMode;
-}
-
-/** retrieve from store the logs sorted by the current sort mode */
-const sortedLogsSelect=createSelector(
-    logsSelect,
-    sortModeSelect,
-    (logs:LogEntry[],sortmode:SortMode):LogEntry[]=>{
-        return sortLogs(logs,sortmode.col,sortmode.desc);
-    }
-);
-
-/** retrive from store the log groups from the logs */
-const logGroupsSelect=createSelector(
-    logsSelect,
-    sortModeSelect,
-    (logs:LogEntry[],sortmode:SortMode):LogGroup[]=>{
-        return sortLogGroups(
-            determineLogGroups(logs),
-            sortmode.col,
-            sortmode.desc
-        );
-    }
-);
 
 export default LogviewerStore;
