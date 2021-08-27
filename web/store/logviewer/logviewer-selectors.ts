@@ -26,13 +26,19 @@ export const logGroupsSelect=createSelector(
 );
 
 /** retrieve from store the logs */
-function logsSelect(store:LogviewerStore):LogEntry[]
+export function logsSelect(store:LogviewerStore):LogEntry[]
 {
     return store.logs;
 }
 
 /** retrieve from store the sortmode */
-function sortModeSelect(store:LogviewerStore):SortMode
+export function sortModeSelect(store:LogviewerStore):SortMode
 {
     return store.sortMode;
+}
+
+/** get group mode */
+export function isGroupModeSelect(store:LogviewerStore):boolean
+{
+    return store.groupMode;
 }
