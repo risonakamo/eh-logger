@@ -1,5 +1,5 @@
 type EntryType="NHENTAI"|"OTHER"|"SANKAKU"|"IMGUR"|"DLSITE"|"HITOMI"|
-    "PIXIV"|"EXHENTAI"|"BETASANKAKU";
+    "PIXIV"|"EXHENTAI"|"BETASANKAKU"|"ANIMELIST";
 
 interface TargetParser
 {

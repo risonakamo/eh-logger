@@ -96,13 +96,17 @@ function getTargetParser(url:string):TargetParser
         parser="exhparser";
         break;
 
+        case "ANIMELIST":
+        parser="alistparser";
+        break;
+
         default:
         parser="";
     }
 
     return {
         type,
-        parser:`pageparsers/${parser}.js`
+        parser:`web/lib/pageparsers/${parser}.js`
     };
 }
 
@@ -147,6 +151,11 @@ function getUrlType(url:string):EntryType
     else if (url.search(/exhentai\.org\/g/)>=0)
     {
         return "EXHENTAI";
+    }
+
+    else if (url.search(/myanimelist.net\/anime/)>=0)
+    {
+        return "ANIMELIST";
     }
 
     return "OTHER";
