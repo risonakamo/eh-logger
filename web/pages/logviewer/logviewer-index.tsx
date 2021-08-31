@@ -64,7 +64,7 @@ function LogviewerMain():JSX.Element
 
     else
     {
-      setLogGroups(sortLogGroups(determineLogGroups(logs),sortmode.col,sortmode.desc))
+      setLogGroups(sortLogGroups(determineLogGroups(logs),sortmode.col,sortmode.desc));
     }
   }
 

@@ -8,6 +8,11 @@ export function sortLogs(logs:LogEntry[],sortMode:SortModeCol,desc:boolean):LogE
     switch (sortMode)
     {
         case "date":
+        sorted=_.sortBy(logs,(x:LogEntry):Date=>{
+            return new Date(x.date);
+        });
+        break;
+
         case "name":
         case "group":
         case "type":
@@ -36,10 +41,15 @@ export function sortLogGroups(logs:LogGroup[],sortMode:SortModeCol,desc:boolean)
     switch (sortMode)
     {
         case "date":
+        sorted=_.sortBy(logs,(x:LogGroup):Date=>{
+            return new Date(x.date);
+        });
+        break;
+
         case "group":
         sorted=_.sortBy(logs,(x:LogGroup):string=>{
-            return x[sortMode];
-        })
+            return x.group;
+        });
         break;
 
         case "count":
