@@ -20,6 +20,7 @@ import "simplebar/dist/simplebar.css";
 
 function LogviewerMain():JSX.Element
 {
+  /** ---- STATE ---- */
   const [logs,setLogs]=useState<LogEntry[]>([]);
 
   const [theLoggroups,setLogGroups]=useState<LogGroup[]>([]);
@@ -31,6 +32,8 @@ function LogviewerMain():JSX.Element
     desc:true
   });
 
+
+  /** ---- EFFECTS ---- */
   // component did mount.
   useEffect(()=>{
     (window as any).convertEhHistoryLogs=convertEhHistoryLogs;
@@ -40,6 +43,7 @@ function LogviewerMain():JSX.Element
       sortAndSetLogs(await getLogEntries());
     })();
   },[]);
+
 
   /**---- STATE CONTROL ----*/
   // perform delete on an entry and re-render.
@@ -102,6 +106,7 @@ function LogviewerMain():JSX.Element
     changeSortMode("date",newmode,true);
   }
 
+
   /**---- HANDLERS ----*/
   /** handle click shuffle button. shuffle log entries or log groups based on mode */
   function h_shuffle(e:React.MouseEvent):void
@@ -117,6 +122,11 @@ function LogviewerMain():JSX.Element
     {
       setLogGroups(_.shuffle(theLoggroups));
     }
+
+    setSortMode({
+      col:"date",
+      desc:false
+    });
   }
 
   /** handle toggle modes button. toggle the group mode */
