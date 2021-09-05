@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useState,useRef,useEffect} from "react";
 import SimpleBar from "simplebar-react";
 import _ from "lodash";
 import cx from "classnames";
@@ -31,6 +31,14 @@ interface ColData
 export default function LogsTable2(props:LogsTableProps):JSX.Element
 {
   const [theExpandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
+
+  // table scrollable content zone
+  const tableContainer=useRef<SimpleBar>(null);
+
+  // scroll to top on group mode change
+  useEffect(()=>{
+    tableContainer.current!.getScrollElement().scrollTop=0;
+  },[props.groupMode]);
 
   /** handle clicked group row. toggle expansion */
   function h_grouprowClick(loggroup:LogGroup):void
@@ -174,7 +182,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     <div className="log-row header-row">
       {renderGroupHeader(props.groupMode)}
     </div>
-    <SimpleBar className="the-log-rows">
+    <SimpleBar className="the-log-rows" ref={tableContainer}>
       <div>
         {rows}
       </div>
