@@ -148,6 +148,12 @@ function LogviewerMain():JSX.Element
     groupModeToggleText="Entry Mode";
   }
 
+  var entryOrGroupModeButtonIcon:string="/assets/imgs/groupmodeicon.png";
+  if (isGroupMode)
+  {
+    entryOrGroupModeButtonIcon="/assets/imgs/entrymodeicon.png";
+  }
+
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
@@ -159,7 +165,7 @@ function LogviewerMain():JSX.Element
           <ExportButton/>
           <ImportButton importedLogs={sortAndSetLogs}/>
           <ColumnButton onClick={h_shuffle} text="Shuffle" icon="/assets/imgs/shuffleicon.png"/>
-          <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText} icon=""/>
+          <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText} icon={entryOrGroupModeButtonIcon}/>
         </div>
       </div>
     </div>
