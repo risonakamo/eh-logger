@@ -4,8 +4,7 @@
 # installation
 ```bash
 npm i
-npm run watch
-ctrl-c when done.
+npm run build
 ```
 
 chrome extension. add to chrome as developer extension.
