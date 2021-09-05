@@ -158,7 +158,7 @@ function LogviewerMain():JSX.Element
         <div className="item-container">
           <ExportButton/>
           <ImportButton importedLogs={sortAndSetLogs}/>
-          <ColumnButton onClick={h_shuffle} text="Shuffle" icon=""/>
+          <ColumnButton onClick={h_shuffle} text="Shuffle" icon="/assets/imgs/shuffleicon.png"/>
           <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText} icon=""/>
         </div>
       </div>
