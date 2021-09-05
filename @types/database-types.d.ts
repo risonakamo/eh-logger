@@ -1,6 +1,7 @@
 interface EhLoggerLocalStorage
 {
     logEntries:LogEntry[]
+    savedInput?:CachedEntryInput
 }
 
 interface LogEntry
@@ -11,4 +12,11 @@ interface LogEntry
     link:string
 
     date:string
+}
+
+interface CachedEntryInput
+{
+    name:string
+    group:string
+    link:string
 }

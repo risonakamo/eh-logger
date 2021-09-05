@@ -94,6 +94,28 @@ export function logEntrySort(a:LogEntry,b:LogEntry):number
   return 0;
 }
 
+/** attempt to retrieve last saved input. might be null if there was no last input */
+export async function getLastInputs():Promise<CachedEntryInput|null>
+{
+    return new Promise<CachedEntryInput|null>((resolve):void=>{
+        chrome.storage.local.get("savedInput",(storage:EhLoggerLocalStorage):void=>{
+            resolve(storage.savedInput || null);
+        });
+    });
+}
+
+/** override the last saved inputs with new saved inputs*/
+export async function setLastInputs(lastInputs:CachedEntryInput):Promise<void>
+{
+    return new Promise<void>((resolve):void=>{
+        chrome.storage.local.set({
+            savedInput:lastInputs
+        },()=>{
+            resolve();
+        });
+    });
+}
+
 // determine if 2 logs are the same
 function logEntryCompare(a:LogEntry,b:LogEntry):boolean
 {
