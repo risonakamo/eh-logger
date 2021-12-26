@@ -30,16 +30,24 @@ interface ColData
 
 export default function LogsTable2(props:LogsTableProps):JSX.Element
 {
+  /** --- states --- */
   const [theExpandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
+  const [typeFilter,setTypeFilter]=useState<EntryType|null>(null);
 
+
+  /** --- refs --- */
   // table scrollable content zone
   const tableContainer=useRef<SimpleBar>(null);
 
+
+  /** --- effects --- */
   // scroll to top on group mode change
   useEffect(()=>{
     tableContainer.current!.getScrollElement().scrollTop=0;
   },[props.groupMode]);
 
+
+  /** --- handlers --- */
   /** handle clicked group row. toggle expansion */
   function h_grouprowClick(loggroup:LogGroup):void
   {
@@ -58,14 +66,33 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
     setExpandedGroups(newexpanded);
   }
 
+  /** type selected on an entry row. set the type filter, only if it wasn't set before */
+  function h_typeSelected(type:EntryType):void
+  {
+    if (!typeFilter)
+    {
+      console.log("set filter",type);
+      setTypeFilter(type);
+    }
+  }
+
+
   /** ---- RENDER ---- */
   /** render standard entry rows when table is in normal row mode */
   function renderRows(logs:LogEntry[],groupMode:boolean,prekey:string):JSX.Element[]
   {
-    return _.map(logs,(x:LogEntry,i:number)=>{
+    return _(logs)
+
+    // if type filter active, filter to only that type
+    .filter((x:LogEntry):boolean=>{
+      return !typeFilter || x.type==typeFilter;
+    })
+
+    .map((x:LogEntry,i:number):JSX.Element=>{
       return <LogRow2 entry={x} key={`${prekey}_${i}`} holdCompleted={props.deleteEntry}
-        groupSubEntry={groupMode}/>
-    });
+        groupSubEntry={groupMode} typeClicked={h_typeSelected}/>
+    })
+    .value();
   }
 
   /** render rows of the table when table is in group mode */

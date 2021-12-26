@@ -14,6 +14,7 @@ interface LogsRowProps
 
   holdCompleted(entry:LogEntry):void // function to call with the row's entry when hold
                                      // action is completed on the row
+  typeClicked(type:EntryType):void
 }
 
 export default function LogRow2(props:LogsRowProps):JSX.Element
@@ -22,6 +23,8 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   const holdTimer=useRef<number>();
   const preventNav=useRef<boolean>(false);
 
+
+  /** --- handlers --- */
   // begin the hold timer
   function beginHoldTimer():void
   {
@@ -74,6 +77,17 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
     });
   }
 
+  /** clicked on type of the row */
+  function h_typeClick(e:React.MouseEvent):void
+  {
+    e.preventDefault();
+    e.stopPropagation();
+
+    props.typeClicked(props.entry.type);
+  }
+
+
+  /** --- render --- */
   const dateText:string=logrowDateformat(props.entry.date);
   const holdingClass:string=holding?"filling":"";
 
@@ -93,7 +107,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>
-    <div className="log-col type">{getAbbrvType(props.entry.type)}</div>
+    <div className="log-col type" onClick={h_typeClick}>{getAbbrvType(props.entry.type)}</div>
     {groupCol}
     <div className="log-col name" title={props.entry.name}>{props.entry.name}</div>
   </a>;
