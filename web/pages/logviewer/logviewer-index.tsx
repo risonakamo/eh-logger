@@ -142,6 +142,9 @@ function LogviewerMain():JSX.Element
     changeSortMode(col,isGroupMode);
   }
 
+
+  /** --- render --- */
+  // toggle to group or entry mode button conditional appearance
   var groupModeToggleText:string="Group Mode";
   if (isGroupMode)
   {
@@ -152,6 +155,17 @@ function LogviewerMain():JSX.Element
   if (isGroupMode)
   {
     entryOrGroupModeButtonIcon="/assets/imgs/entrymodeicon.png";
+  }
+
+  // expand all groups button only appears in group mode
+  function renderExpandAllGroups():JSX.Element|undefined
+  {
+    if (!isGroupMode)
+    {
+      return;
+    }
+
+    return <ColumnButton text="Expand All Groups" icon="/assets/imgs/groupmodeicon.png"/>;
   }
 
   return <>
@@ -165,7 +179,9 @@ function LogviewerMain():JSX.Element
           <ExportButton/>
           <ImportButton importedLogs={sortAndSetLogs}/>
           <ColumnButton onClick={h_shuffle} text="Shuffle" icon="/assets/imgs/shuffleicon.png"/>
-          <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText} icon={entryOrGroupModeButtonIcon}/>
+          <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText}
+            icon={entryOrGroupModeButtonIcon}/>
+          {renderExpandAllGroups()}
         </div>
       </div>
     </div>

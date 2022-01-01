@@ -11,7 +11,14 @@ interface ColumnButtonProps
 
 export default function ColumnButton(props:ColumnButtonProps):JSX.Element
 {
-  return <a href="" onClick={props.onClick} className="column-button">
+  /** handle click, cancel href event */
+  function h_click(e:React.MouseEvent):void
+  {
+    e.preventDefault();
+    props.onClick?.(e);
+  }
+
+  return <a href="" onClick={h_click} className="column-button">
     <div className="button-text">{props.text}</div>
     <img src={props.icon}/>
   </a>;
