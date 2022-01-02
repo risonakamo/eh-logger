@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useMemo} from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import {Provider,useSelector} from "react-redux";
@@ -31,6 +31,22 @@ function LogviewerMain():JSX.Element
     col:"date",
     desc:true
   });
+
+  const [expandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
+
+
+  /** --- derived state --- */
+  // all group names in set forme
+  const allGroupNames:Set<string>=useMemo(()=>{
+    return new Set(_.map(theLoggroups,(x:LogGroup):string=>{
+      return x.group;
+    }));
+  },[theLoggroups]);
+
+  // if all groups are expanded or not
+  const allExpanded:boolean=useMemo(()=>{
+    return expandedGroups.size==allGroupNames.size;
+  },[expandedGroups,allGroupNames]);
 
 
   /** ---- EFFECTS ---- */
@@ -106,6 +122,18 @@ function LogviewerMain():JSX.Element
     changeSortMode("date",newmode,true);
   }
 
+  /** add all group names to expanded groups state */
+  function expandAllGroups():void
+  {
+    setExpandedGroups(new Set(allGroupNames));
+  }
+
+  /** collapse all expanded groups */
+  function collapseAllGroups():void
+  {
+    setExpandedGroups(new Set());
+  }
+
 
   /**---- HANDLERS ----*/
   /** handle click shuffle button. shuffle log entries or log groups based on mode */
@@ -142,6 +170,25 @@ function LogviewerMain():JSX.Element
     changeSortMode(col,isGroupMode);
   }
 
+  /** logs table expanded groups changed. override the expanded groups */
+  function h_expandedGroupsChanged(newgroups:Set<string>):void
+  {
+    setExpandedGroups(newgroups);
+  }
+
+  /** clicked expand all groups button. perform expand all groups, unless all groups are already expanded,
+   *  then close them all instead */
+  function h_expandAllGroupsClicked():void
+  {
+    if (allExpanded)
+    {
+      collapseAllGroups();
+      return;
+    }
+
+    expandAllGroups();
+  }
+
 
   /** --- render --- */
   // toggle to group or entry mode button conditional appearance
@@ -158,21 +205,29 @@ function LogviewerMain():JSX.Element
   }
 
   // expand all groups button only appears in group mode
-  function renderExpandAllGroups():JSX.Element|undefined
+  function renderExpandAllGroupsButton():JSX.Element|undefined
   {
     if (!isGroupMode)
     {
       return;
     }
 
-    return <ColumnButton text="Expand All Groups" icon="/assets/imgs/groupmodeicon.png"/>;
+    var expandAllButtonText:string="Expand All Groups";
+    if (allExpanded)
+    {
+      expandAllButtonText="Collapse All";
+    }
+
+    return <ColumnButton text={expandAllButtonText} icon="/assets/imgs/groupmodeicon.png"
+      onClick={h_expandAllGroupsClicked}/>;
   }
 
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
         <LogsTable2 logs={logs} loggroups={theLoggroups} deleteEntry={doDeleteEntry}
-          groupMode={isGroupMode} sortMode={theSortMode} onColNameClick={h_tableColClick}/>
+          groupMode={isGroupMode} sortMode={theSortMode} onColNameClick={h_tableColClick}
+          expandedGroups={expandedGroups} expandedGroupsChanged={h_expandedGroupsChanged}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
@@ -181,7 +236,7 @@ function LogviewerMain():JSX.Element
           <ColumnButton onClick={h_shuffle} text="Shuffle" icon="/assets/imgs/shuffleicon.png"/>
           <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText}
             icon={entryOrGroupModeButtonIcon}/>
-          {renderExpandAllGroups()}
+          {renderExpandAllGroupsButton()}
         </div>
       </div>
     </div>

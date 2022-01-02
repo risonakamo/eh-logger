@@ -13,12 +13,20 @@ interface LogsTableProps
   logs:LogEntry[]
   loggroups:LogGroup[]
 
+  expandedGroups:Set<string>
+
   groupMode:boolean
 
   sortMode:SortMode
 
+  // log entry was deleted
   deleteEntry(entry:LogEntry):void
+
+  // clicked on a sort column
   onColNameClick(col:SortModeCol):void
+
+  // expanded groups changed (added or deleted)
+  expandedGroupsChanged(newgroups:Set<string>):void
 }
 
 interface ColData
@@ -31,7 +39,6 @@ interface ColData
 export default function LogsTable2(props:LogsTableProps):JSX.Element
 {
   /** --- states --- */
-  const [theExpandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
   const [typeFilter,setTypeFilter]=useState<EntryType|null>(null);
 
 
@@ -51,9 +58,9 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   /** handle clicked group row. toggle expansion */
   function h_grouprowClick(loggroup:LogGroup):void
   {
-    var newexpanded:Set<string>=new Set(theExpandedGroups);
+    var newexpanded:Set<string>=new Set(props.expandedGroups);
 
-    if (theExpandedGroups.has(loggroup.group))
+    if (props.expandedGroups.has(loggroup.group))
     {
       newexpanded.delete(loggroup.group);
     }
@@ -63,7 +70,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
       newexpanded.add(loggroup.group);
     }
 
-    setExpandedGroups(newexpanded);
+    props.expandedGroupsChanged(newexpanded);
   }
 
   /** type selected on an entry row. set the type filter, only if it wasn't set before */
@@ -99,7 +106,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
   function renderGroupRows():JSX.Element[]
   {
     return _.flatMap(props.loggroups,(x:LogGroup,i:number):JSX.Element[]=>{
-      var isexpanded:boolean=theExpandedGroups.has(x.group);
+      var isexpanded:boolean=props.expandedGroups.has(x.group);
 
       var grouprow:JSX.Element=<GroupRow key={i} loggroup={x} onClick={h_grouprowClick}
         expanded={isexpanded}/>;
