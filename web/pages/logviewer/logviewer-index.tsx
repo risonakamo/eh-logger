@@ -213,12 +213,14 @@ function LogviewerMain():JSX.Element
     }
 
     var expandAllButtonText:string="Expand All Groups";
+    var expandAllIcon:string="/assets/imgs/group-expand.png";
     if (allExpanded)
     {
       expandAllButtonText="Collapse All";
+      expandAllIcon="/assets/imgs/group-collapse.png";
     }
 
-    return <ColumnButton text={expandAllButtonText} icon="/assets/imgs/groupmodeicon.png"
+    return <ColumnButton text={expandAllButtonText} icon={expandAllIcon}
       onClick={h_expandAllGroupsClicked}/>;
   }
 
