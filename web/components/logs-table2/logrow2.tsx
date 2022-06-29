@@ -123,7 +123,8 @@ const abbrvType:Record<EntryType,string>={
   PIXIV:"PX",
   EXHENTAI:"EX",
   BETASANKAKU:"BS",
-  ANIMELIST:"AL"
+  ANIMELIST:"AL",
+  IWARA:"IW"
 };
 
 // given a type, return the abbreviated version

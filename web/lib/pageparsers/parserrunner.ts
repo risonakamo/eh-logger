@@ -100,6 +100,10 @@ function getTargetParser(url:string):TargetParser
         parser="alistparser";
         break;
 
+        case "IWARA":
+        parser="iwaraparser";
+        break;
+
         default:
         parser="";
     }
@@ -133,17 +137,17 @@ function getUrlType(url:string):EntryType
         return "NHENTAI";
     }
 
-    else if (url.search(/imgur.com\/a/)>=0)
+    else if (url.search(/imgur\.com\/a/)>=0)
     {
         return "IMGUR";
     }
 
-    else if (url.search(/hitomi.la\/(doujinshi|cg|gamecg)/)>=0)
+    else if (url.search(/hitomi\.la\/(doujinshi|cg|gamecg)/)>=0)
     {
         return "HITOMI";
     }
 
-    else if (url.search(/dlsite.com\/maniax\/work/)>=0)
+    else if (url.search(/dlsite\.com\/maniax\/work/)>=0)
     {
         return "DLSITE";
     }
@@ -153,9 +157,14 @@ function getUrlType(url:string):EntryType
         return "EXHENTAI";
     }
 
-    else if (url.search(/myanimelist.net\/anime/)>=0)
+    else if (url.search(/myanimelist\.net\/anime/)>=0)
     {
         return "ANIMELIST";
+    }
+
+    else if (url.search(/ecchi\.iwara\.tv\/videos/)>=0)
+    {
+        return "IWARA";
     }
 
     return "OTHER";

@@ -20,7 +20,8 @@
         "https://beta.sankakucomplex.com/?tags=*",
         "https://www.pixiv.net/users/*",
         "https://exhentai.org/g/*",
-        "https://myanimelist.net/anime/*"
+        "https://myanimelist.net/anime/*",
+        "https://ecchi.iwara.tv/videos/*"
     ],
 
     "browser_action":{
