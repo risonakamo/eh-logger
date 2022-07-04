@@ -7,6 +7,7 @@ import ExportButton from "components/exportbutton/exportbutton";
 import ImportButton from "components/import-button/import-button";
 import LogsTable2 from "components/logs-table2/logstable2";
 import ColumnButton from "components/column-button/column-button";
+import GroupAliasEditor from "components/group-alias-editor/group-alias-editor";
 
 import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
@@ -239,6 +240,8 @@ function LogviewerMain():JSX.Element
           <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText}
             icon={entryOrGroupModeButtonIcon}/>
           {renderExpandAllGroupsButton()}
+          <ColumnButton text="Edit Group Alias" icon="/assets/imgs/shuffleicon.png"/>
+          <GroupAliasEditor selectedGroup="borscht"/>
         </div>
       </div>
     </div>

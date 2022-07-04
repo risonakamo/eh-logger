@@ -1,0 +1,67 @@
+.group-alias-editor
+{
+    h1
+    {
+        font-size: 14px;
+        font-weight: bold;
+        color: blue;
+    }
+
+    h2
+    {
+        font-size: 10px;
+        opacity: 0.8;
+        margin-top: 6px;
+        margin-bottom: 2px;
+    }
+
+    .selected-group
+    {
+        font-size: 17px;
+        font-style: italic;
+    }
+
+    .alias-list
+    {
+        .alias-item
+        {
+            display: flex;
+            height: 25px;
+
+            p
+            {
+                flex: 1;
+            }
+
+            .remove-button
+            {
+                width: 25px;
+                display: flex;
+                justify-content: center;
+                opacity: 0;
+                cursor: pointer;
+
+                &:hover
+                {
+                    color: red;
+                }
+            }
+
+            &:hover
+            {
+                .remove-button
+                {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    .group-info
+    {
+        &.hidden
+        {
+            display: none;
+        }
+    }
+}
