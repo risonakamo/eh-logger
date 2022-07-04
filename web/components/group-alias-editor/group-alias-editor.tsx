@@ -1,5 +1,7 @@
-import React from "react";
+import React,{useEffect,useState,useRef} from "react";
 import cx,{Mapping} from "classnames";
+
+import {getGroupAlias,addGroupAlias} from "lib/logger-database";
 
 import "./group-alias-editor.less";
 
@@ -10,6 +12,44 @@ interface GroupAliasEditorProps
 
 export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Element
 {
+  const [currentAlias,setCurrentAlias]=useState<string|null>(null);
+
+  const aliasInputBox=useRef<HTMLInputElement>(null);
+
+  // try to get alias for the selected group when it changes
+  useEffect(()=>{
+    (async ()=>{
+      refreshCurrentAlias();
+    })();
+  },[props.selectedGroup]);
+
+
+  // --- control ---
+  /** refresh the alias for the current group */
+  async function refreshCurrentAlias():Promise<void>
+  {
+    if (props.selectedGroup)
+    {
+      setCurrentAlias(await getGroupAlias(props.selectedGroup));
+    }
+  }
+
+
+  // --- handlers ---
+  /** alias text entry key event. on enter key, submit the new alias */
+  function h_aliasTextboxKey(e:React.KeyboardEvent):void
+  {
+    if (e.key=="Enter")
+    {
+      if (aliasInputBox.current?.value && props.selectedGroup)
+      {
+        addGroupAlias(props.selectedGroup,aliasInputBox.current.value);
+      }
+    }
+  }
+
+
+  // --- render ---
   var selectedGroupText:string="None";
   if (props.selectedGroup)
   {
@@ -20,6 +60,12 @@ export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Elemen
     hidden:props.selectedGroup==null
   };
 
+  var groupAliasText:string="None";
+  if (currentAlias)
+  {
+    groupAliasText=currentAlias;
+  }
+
   return <div className="group-alias-editor">
     <h1>Group Alias Editor</h1>
 
@@ -27,20 +73,13 @@ export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Elemen
     <p className="selected-group">{selectedGroupText}</p>
 
     <div className={cx("group-info",groupInfoCx)}>
-      <h2>Add Alias</h2>
-      <input type="text"/>
+      <h2>Alias</h2>
+      <p className="selected-group">{groupAliasText}</p>
 
-      <h2>Aliases</h2>
-      <div className="alias-list">
-        <div className="alias-item">
-          <p>asasdad</p>
-          <div className="remove-button">x</div>
-        </div>
-        <div className="alias-item">
-          <p>asasdad</p>
-          <div className="remove-button">x</div>
-        </div>
-      </div>
+      <h2>Add Alias</h2>
+      <input type="text" onKeyDown={h_aliasTextboxKey} ref={aliasInputBox}/>
+
+      <a href="" className="remove-alias">Remove Alias</a>
     </div>
   </div>;
 }

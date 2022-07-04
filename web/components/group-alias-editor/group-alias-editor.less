@@ -21,47 +21,18 @@
         font-style: italic;
     }
 
-    .alias-list
-    {
-        .alias-item
-        {
-            display: flex;
-            height: 25px;
-
-            p
-            {
-                flex: 1;
-            }
-
-            .remove-button
-            {
-                width: 25px;
-                display: flex;
-                justify-content: center;
-                opacity: 0;
-                cursor: pointer;
-
-                &:hover
-                {
-                    color: red;
-                }
-            }
-
-            &:hover
-            {
-                .remove-button
-                {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-
     .group-info
     {
         &.hidden
         {
             display: none;
         }
+    }
+
+    .remove-alias
+    {
+        display: block;
+        text-decoration: underline;
+        font-size: 12px;
     }
 }

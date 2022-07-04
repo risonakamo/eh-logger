@@ -1,7 +1,8 @@
 interface EhLoggerLocalStorage
 {
-    logEntries:LogEntry[]
+    logEntries?:LogEntry[]
     savedInput?:CachedEntryInput
+    groupAliases?:GroupAliases
 }
 
 interface LogEntry
