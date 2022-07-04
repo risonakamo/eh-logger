@@ -12,6 +12,8 @@ interface LogsRowProps
   // display as a group subentry
   groupSubEntry?:boolean
 
+  linkClicked(entry:LogEntry,ctrl:boolean):void
+
   holdCompleted(entry:LogEntry):void // function to call with the row's entry when hold
                                      // action is completed on the row
   typeClicked(type:EntryType):void
@@ -55,8 +57,8 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
     }
   }
 
-  // prevent navigation after a hold event completed
-  function linkClick(e:React.MouseEvent):void
+  /** link clicked, trigger handler */
+  function h_linkclick(e:React.MouseEvent):void
   {
     e.preventDefault();
 
@@ -65,16 +67,7 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
       return;
     }
 
-    if (e.ctrlKey)
-    {
-      window.location.href=props.entry.link;
-      return;
-    }
-
-    chrome.tabs.create({
-      active:false,
-      url:props.entry.link
-    });
+    props.linkClicked(props.entry,e.ctrlKey);
   }
 
   /** clicked on type of the row */
@@ -102,8 +95,8 @@ export default function LogRow2(props:LogsRowProps):JSX.Element
   };
 
   return <a className={cx("log-row",props.entry.type,topclass)} href={props.entry.link}
-    onMouseDown={beginHoldTimer} onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer} onClick={linkClick}
-    onDragLeave={endHoldTimer} onMouseOut={endHoldTimer}
+    onMouseDown={beginHoldTimer} onMouseUp={endHoldTimer} onMouseLeave={endHoldTimer}
+    onClick={h_linkclick} onDragLeave={endHoldTimer} onMouseOut={endHoldTimer}
   >
     <div className={`fill-bar ${holdingClass}`}></div>
     <div className="log-col date">{dateText}</div>

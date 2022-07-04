@@ -35,6 +35,9 @@ function LogviewerMain():JSX.Element
 
   const [expandedGroups,setExpandedGroups]=useState<Set<string>>(new Set());
 
+  const [groupAliasMode,setGroupAliasMode]=useState<boolean>(false);
+  const [selectedEditGroup,setSelectedEditGroup]=useState<string|null>(null);
+
 
   /** --- derived state --- */
   // all group names in set forme
@@ -190,6 +193,27 @@ function LogviewerMain():JSX.Element
     expandAllGroups();
   }
 
+  /** toggle group alias mode */
+  function h_groupAliasModeToggle():void
+  {
+    setGroupAliasMode(!groupAliasMode);
+  }
+
+  /** clicked on link, open in new tab or in current tab */
+  function h_linkClicked(entry:LogEntry,ctrl:boolean):void
+  {
+    if (ctrl)
+    {
+      window.location.href=entry.link;
+      return;
+    }
+
+    chrome.tabs.create({
+      active:false,
+      url:entry.link
+    });
+  }
+
 
   /** --- render --- */
   // toggle to group or entry mode button conditional appearance
@@ -203,6 +227,12 @@ function LogviewerMain():JSX.Element
   if (isGroupMode)
   {
     entryOrGroupModeButtonIcon="/assets/imgs/entrymodeicon.png";
+  }
+
+  var groupAliasToggleText:string="Edit Group Alias";
+  if (groupAliasMode)
+  {
+    groupAliasToggleText="Done edit Group Alias";
   }
 
   // expand all groups button only appears in group mode
@@ -230,7 +260,8 @@ function LogviewerMain():JSX.Element
       <div className="log-table-contain container-col">
         <LogsTable2 logs={logs} loggroups={theLoggroups} deleteEntry={doDeleteEntry}
           groupMode={isGroupMode} sortMode={theSortMode} onColNameClick={h_tableColClick}
-          expandedGroups={expandedGroups} expandedGroupsChanged={h_expandedGroupsChanged}/>
+          expandedGroups={expandedGroups} expandedGroupsChanged={h_expandedGroupsChanged}
+          onLinkClicked={h_linkClicked}/>
       </div>
       <div className="control-column container-col">
         <div className="item-container">
@@ -240,8 +271,9 @@ function LogviewerMain():JSX.Element
           <ColumnButton onClick={h_toggleGroupMode} text={groupModeToggleText}
             icon={entryOrGroupModeButtonIcon}/>
           {renderExpandAllGroupsButton()}
-          <ColumnButton text="Edit Group Alias" icon="/assets/imgs/shuffleicon.png"/>
-          <GroupAliasEditor selectedGroup="borscht"/>
+          <ColumnButton text={groupAliasToggleText} icon="/assets/imgs/shuffleicon.png"
+            onClick={h_groupAliasModeToggle}/>
+          <GroupAliasEditor selectedGroup={selectedEditGroup}/>
         </div>
       </div>
     </div>

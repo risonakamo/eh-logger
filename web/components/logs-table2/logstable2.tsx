@@ -27,6 +27,8 @@ interface LogsTableProps
 
   // expanded groups changed (added or deleted)
   expandedGroupsChanged(newgroups:Set<string>):void
+
+  onLinkClicked(entry:LogEntry,ctrl:boolean):void
 }
 
 interface ColData
@@ -97,7 +99,7 @@ export default function LogsTable2(props:LogsTableProps):JSX.Element
 
     .map((x:LogEntry,i:number):JSX.Element=>{
       return <LogRow2 entry={x} key={`${prekey}_${i}`} holdCompleted={props.deleteEntry}
-        groupSubEntry={groupMode} typeClicked={h_typeSelected}/>
+        groupSubEntry={groupMode} typeClicked={h_typeSelected} linkClicked={props.onLinkClicked}/>
     })
     .value();
   }
