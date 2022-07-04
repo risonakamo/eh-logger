@@ -1,7 +1,7 @@
 import React,{useEffect,useState,useRef} from "react";
 import cx,{Mapping} from "classnames";
 
-import {getGroupAlias,addGroupAlias} from "lib/logger-database";
+import {getGroupAlias,addGroupAlias,removeGroupAlias} from "lib/logger-database";
 
 import "./group-alias-editor.less";
 
@@ -37,14 +37,27 @@ export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Elemen
 
   // --- handlers ---
   /** alias text entry key event. on enter key, submit the new alias */
-  function h_aliasTextboxKey(e:React.KeyboardEvent):void
+  async function h_aliasTextboxKey(e:React.KeyboardEvent):Promise<void>
   {
     if (e.key=="Enter")
     {
       if (aliasInputBox.current?.value && props.selectedGroup)
       {
-        addGroupAlias(props.selectedGroup,aliasInputBox.current.value);
+        await addGroupAlias(props.selectedGroup,aliasInputBox.current.value);
+        refreshCurrentAlias();
       }
+    }
+  }
+
+  /** remove alias button. call remove alias for the current group */
+  async function h_removeAlias(e:React.MouseEvent):Promise<void>
+  {
+    e.preventDefault();
+
+    if (props.selectedGroup)
+    {
+      await removeGroupAlias(props.selectedGroup);
+      refreshCurrentAlias();
     }
   }
 
@@ -69,17 +82,17 @@ export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Elemen
   return <div className="group-alias-editor">
     <h1>Group Alias Editor</h1>
 
-    <h2>Selected Group</h2>
+    <h2>Real Group Name</h2>
     <p className="selected-group">{selectedGroupText}</p>
 
     <div className={cx("group-info",groupInfoCx)}>
       <h2>Alias</h2>
       <p className="selected-group">{groupAliasText}</p>
 
-      <h2>Add Alias</h2>
+      <h2>Edit Alias</h2>
       <input type="text" onKeyDown={h_aliasTextboxKey} ref={aliasInputBox}/>
 
-      <a href="" className="remove-alias">Remove Alias</a>
+      <a href="" className="remove-alias" onClick={h_removeAlias}>Remove Alias</a>
     </div>
   </div>;
 }

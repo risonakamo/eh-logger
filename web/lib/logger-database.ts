@@ -140,7 +140,21 @@ export async function addGroupAlias(realname:string,alias:string):Promise<void>
         groupAliases:groupalias
     };
 
-    chrome.storage.local.set(localStorageUpdate);
+    await chrome.storage.local.set(localStorageUpdate);
+}
+
+/** remove alias of a group realname */
+export async function removeGroupAlias(realname:string):Promise<void>
+{
+    const groupalias:GroupAliases=await getGroupAliases();
+
+    delete groupalias[realname];
+
+    const localStorageUpdate:EhLoggerLocalStorage={
+        groupAliases:groupalias
+    };
+
+    await chrome.storage.local.set(localStorageUpdate);
 }
 
 // determine if 2 logs are the same
