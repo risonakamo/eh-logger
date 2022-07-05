@@ -199,9 +199,17 @@ function LogviewerMain():JSX.Element
     setGroupAliasMode(!groupAliasMode);
   }
 
-  /** clicked on link, open in new tab or in current tab */
+  /** clicked on link, open in new tab or in current tab. when in group alias edit mode, set the
+   *  group being edited
+   */
   function h_linkClicked(entry:LogEntry,ctrl:boolean):void
   {
+    if (groupAliasMode)
+    {
+      setSelectedEditGroup(entry.group);
+      return;
+    }
+
     if (ctrl)
     {
       window.location.href=entry.link;
