@@ -18,7 +18,7 @@ export const logGroupsSelect=createSelector(
     sortModeSelect,
     (logs:LogEntry[],sortmode:SortMode):LogGroup[]=>{
         return sortLogGroups(
-            determineLogGroups(logs),
+            determineLogGroups(logs,{}),
             sortmode.col,
             sortmode.desc
         );

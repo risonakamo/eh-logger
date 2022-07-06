@@ -2,6 +2,7 @@ import React,{useEffect,useState,useMemo} from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import {Provider,useSelector} from "react-redux";
+import cx,{Mapping} from "classnames";
 
 import ExportButton from "components/exportbutton/exportbutton";
 import ImportButton from "components/import-button/import-button";
@@ -9,7 +10,8 @@ import LogsTable2 from "components/logs-table2/logstable2";
 import ColumnButton from "components/column-button/column-button";
 import GroupAliasEditor from "components/group-alias-editor/group-alias-editor";
 
-import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry} from "lib/logger-database";
+import {attachWindowFunctions,getLogEntries,logEntrySort,deleteEntry,
+  getGroupAliases} from "lib/logger-database";
 import convertEhHistoryLogs from "lib/legacyconverter";
 import {determineLogGroups} from "lib/log-grouper";
 import {sortLogs,sortLogGroups} from "lib/log-sort";
@@ -37,6 +39,7 @@ function LogviewerMain():JSX.Element
 
   const [groupAliasMode,setGroupAliasMode]=useState<boolean>(false);
   const [selectedEditGroup,setSelectedEditGroup]=useState<string|null>(null);
+  const [groupAliases,setGroupAliases]=useState<GroupAliases>({});
 
 
   /** --- derived state --- */
@@ -61,6 +64,10 @@ function LogviewerMain():JSX.Element
     // initial retrival of logs.
     (async ()=>{
       sortAndSetLogs(await getLogEntries());
+    })();
+
+    (async ()=>{
+      setGroupAliases(await getGroupAliases());
     })();
   },[]);
 
@@ -88,7 +95,11 @@ function LogviewerMain():JSX.Element
 
     else
     {
-      setLogGroups(sortLogGroups(determineLogGroups(logs),sortmode.col,sortmode.desc));
+      setLogGroups(sortLogGroups(
+        determineLogGroups(logs,groupAliases),
+        sortmode.col,
+        sortmode.desc
+      ));
     }
   }
 
@@ -263,6 +274,10 @@ function LogviewerMain():JSX.Element
       onClick={h_expandAllGroupsClicked}/>;
   }
 
+  const groupAliasEditorCx:Mapping={
+    hidden:!groupAliasMode
+  };
+
   return <>
     <div className="container">
       <div className="log-table-contain container-col">
@@ -281,7 +296,7 @@ function LogviewerMain():JSX.Element
           {renderExpandAllGroupsButton()}
           <ColumnButton text={groupAliasToggleText} icon="/assets/imgs/shuffleicon.png"
             onClick={h_groupAliasModeToggle}/>
-          <GroupAliasEditor selectedGroup={selectedEditGroup}/>
+          <GroupAliasEditor selectedGroup={selectedEditGroup} className={cx(groupAliasEditorCx)}/>
         </div>
       </div>
     </div>

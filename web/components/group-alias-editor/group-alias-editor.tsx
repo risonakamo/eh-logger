@@ -8,6 +8,7 @@ import "./group-alias-editor.less";
 interface GroupAliasEditorProps
 {
   selectedGroup:string|null
+  className?:string
 }
 
 export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Element
@@ -79,7 +80,7 @@ export default function GroupAliasEditor(props:GroupAliasEditorProps):JSX.Elemen
     groupAliasText=currentAlias;
   }
 
-  return <div className="group-alias-editor">
+  return <div className={cx("group-alias-editor",props.className)}>
     <h1>Group Alias Editor</h1>
 
     <h2>Real Group Name</h2>

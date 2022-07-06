@@ -157,6 +157,16 @@ export async function removeGroupAlias(realname:string):Promise<void>
     await chrome.storage.local.set(localStorageUpdate);
 }
 
+/** get all group aliases */
+export async function getGroupAliases():Promise<GroupAliases>
+{
+    return new Promise<GroupAliases>((resolve):void=>{
+        chrome.storage.local.get("groupAliases",(storage:EhLoggerLocalStorage):void=>{
+            resolve(storage.groupAliases || {});
+        });
+    });
+}
+
 // determine if 2 logs are the same
 function logEntryCompare(a:LogEntry,b:LogEntry):boolean
 {
@@ -175,14 +185,4 @@ function checkStorage():void
 function clearStorage():void
 {
     chrome.storage.local.clear();
-}
-
-/** get all group aliases */
-async function getGroupAliases():Promise<GroupAliases>
-{
-    return new Promise<GroupAliases>((resolve):void=>{
-        chrome.storage.local.get("groupAliases",(storage:EhLoggerLocalStorage):void=>{
-            resolve(storage.groupAliases || {});
-        });
-    });
 }

@@ -1,9 +1,14 @@
 import _ from "lodash";
 
 /** combine different LogEntrys into LogGroups */
-export function determineLogGroups(entries:LogEntry[]):LogGroup[]
+export function determineLogGroups(entries:LogEntry[],aliases:GroupAliases):LogGroup[]
 {
-    var groupedentries:GroupedLogEntries=_.groupBy(entries,(x:LogEntry):string=>{
+    const groupedentries:GroupedLogEntries=_.groupBy(entries,(x:LogEntry):string=>{
+        if (x.group in aliases)
+        {
+            return aliases[x.group];
+        }
+
         return x.group;
     });
 
