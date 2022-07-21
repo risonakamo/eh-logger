@@ -60,6 +60,9 @@ function LogviewerMain():JSX.Element
   // component did mount.
   useEffect(()=>{
     (window as any).convertEhHistoryLogs=convertEhHistoryLogs;
+    (window as any).getGroupAliases=async ()=>{
+      console.log(await getGroupAliases());
+    };
 
     // initial retrival of logs.
     (async ()=>{
