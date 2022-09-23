@@ -4,10 +4,10 @@ how to add new page parser to handle new websites
 add to EntryType type a type for your page
 
 # logrow2.tsx
-add an abbreviation for your page type
+add an abbreviation for your page type (`const abbrvType`)
 
 # types-colours.less
-add a colour for your type
+add a colour for your type. also add it to the `@type-colours` map
 
 # manifest.json
 add a url rule permission that matches your target page

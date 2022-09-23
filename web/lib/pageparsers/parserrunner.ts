@@ -104,6 +104,10 @@ function getTargetParser(url:string):TargetParser
         parser="iwaraparser";
         break;
 
+        case "STEAM":
+        parser="steamparser";
+        break;
+
         default:
         parser="";
     }
@@ -165,6 +169,11 @@ function getUrlType(url:string):EntryType
     else if (url.search(/ecchi\.iwara\.tv\/videos/)>=0)
     {
         return "IWARA";
+    }
+
+    else if (url.search(/steamdb\.info\/app/)>=0)
+    {
+        return "STEAM";
     }
 
     return "OTHER";

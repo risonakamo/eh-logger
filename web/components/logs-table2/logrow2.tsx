@@ -117,7 +117,8 @@ const abbrvType:Record<EntryType,string>={
   EXHENTAI:"EX",
   BETASANKAKU:"BS",
   ANIMELIST:"AL",
-  IWARA:"IW"
+  IWARA:"IW",
+  STEAM:"ST"
 };
 
 // given a type, return the abbreviated version
