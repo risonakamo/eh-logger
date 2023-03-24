@@ -3,7 +3,7 @@
     "name":"EH Logger",
     "short_name":"ehlogger",
     "description":"EH dedicated logging system",
-    "version":"2.3.0",
+    "version":"2.3.1",
     "homepage_url":"https://github.com/risonakamo/eh-logger",
 
     "permissions":[
