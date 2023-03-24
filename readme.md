@@ -2,6 +2,8 @@
 ![](https://raw.githubusercontent.com/risonakamo/eh-logger/master/icons/128.png)
 
 # installation
+working node version: 16.19.1
+
 ```bash
 npm i
 npm run build

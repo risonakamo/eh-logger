@@ -166,7 +166,10 @@ function getUrlType(url:string):EntryType
         return "ANIMELIST";
     }
 
-    else if (url.search(/ecchi\.iwara\.tv\/videos/)>=0)
+    else if (
+        url.search(/ecchi\.iwara\.tv\/videos/)>=0
+        || url.search(/iwara\.tv\/video/)>=0
+    )
     {
         return "IWARA";
     }
